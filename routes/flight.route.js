@@ -24,9 +24,9 @@ router.put('/', async (req, res) => {
     }
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:flightNo', async (req, res) => {
     try {
-        const deletedFlight = await deleteFlight(req.params.id);
+        const deletedFlight = await deleteFlight(req.params.flightNo);
         res.status(201).json({ deletedFlight });
     } catch (err) {
         res.status(err?.status || 500).json(err);

@@ -25,7 +25,7 @@ const createFlight = async ({ flightNumber, departureDate, arrivalDate, departur
     }
 }
 
-const updateFlight = async ({ _id, flightNumber, departureDate, arrivalDate, departureTime, arrivalTime, departureAirport, arrivalAirport, currPassengers, passengerLimit }) => {
+const updateFlight = async ({ flightNumber, departureDate, arrivalDate, departureTime, arrivalTime, departureAirport, arrivalAirport, currPassengers, passengerLimit }) => {
     try {
         const updates = {
             flightNumber,
@@ -38,16 +38,16 @@ const updateFlight = async ({ _id, flightNumber, departureDate, arrivalDate, dep
             currPassengers,
             passengerLimit
         };
-        const updatedFlight = await Flight.findByIdAndUpdate(_id, updates, { new: true });
+        const updatedFlight = await Flight.findOneAndUpdate({ flightNumber } , updates, { new: true });
         return updatedFlight;
     } catch (err) {
         throw { status: 400, message: err.message };
     }
 }
 
-const deleteFlight = async id => {
+const deleteFlight = async flightNumber => {
     try {
-        const deletedFlight = await Flight.findByIdAndDelete(id);
+        const deletedFlight = await Flight.deleteOne({ flightNumber });
         return deletedFlight;
     } catch (err) {
         throw { status: 400, message: err.message };
