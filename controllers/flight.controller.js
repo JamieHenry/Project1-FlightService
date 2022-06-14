@@ -1,5 +1,9 @@
 const Flight = require('../models/Flight.model');
 
+const passengersOverLimit = (currPassengers, passengerLimit) => {
+    return currPassengers > passengerLimit;
+}
+
 const findAllFlights = async () => {
     const flights = await Flight.find();
     return flights;
@@ -7,6 +11,9 @@ const findAllFlights = async () => {
 
 const createFlight = async ({ flightNumber, departureDate, arrivalDate, departureTime, arrivalTime, departureAirport, arrivalAirport, currPassengers, passengerLimit }) => {
     try {
+        if (passengersOverLimit(currPassengers, passengerLimit)) {
+            throw { message: 'Current # passengers exceeds passenger limit' };
+        }
         const flight = new Flight({
             flightNumber,
             departureDate,
@@ -27,6 +34,9 @@ const createFlight = async ({ flightNumber, departureDate, arrivalDate, departur
 
 const updateFlight = async ({ flightNumber, departureDate, arrivalDate, departureTime, arrivalTime, departureAirport, arrivalAirport, currPassengers, passengerLimit }) => {
     try {
+        if (passengersOverLimit(currPassengers, passengerLimit)) {
+            throw { message: 'Current # passengers exceeds passenger limit' };
+        }
         const updates = {
             flightNumber,
             departureDate,
