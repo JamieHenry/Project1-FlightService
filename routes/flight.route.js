@@ -1,11 +1,13 @@
 const router = require('express').Router();
 const { findAllFlights, createFlight, updateFlight, deleteFlight } = require('../controllers/flight.controller');
 
+// GET - return all flights
 router.get('/', async (req, res) => {
     const flights = await findAllFlights();
     res.status(200).json(flights);
 });
 
+// POST - create a new flight
 router.post('/', async (req, res) => {
     try {
         const _id = await createFlight(req.body);
@@ -15,6 +17,7 @@ router.post('/', async (req, res) => {
     }
 });
 
+// PUT - update a flight
 router.put('/', async (req, res) => {
     try {
         const updatedFlight = await updateFlight(req.body);
@@ -24,6 +27,8 @@ router.put('/', async (req, res) => {
     }
 });
 
+// DELETE - delete a specific flight
+//        - identified with Flight Number
 router.delete('/:flightNo', async (req, res) => {
     try {
         const deletedFlight = await deleteFlight(req.params.flightNo);
@@ -33,4 +38,5 @@ router.delete('/:flightNo', async (req, res) => {
     }
 });
 
+// export router for require statements
 module.exports = router;
