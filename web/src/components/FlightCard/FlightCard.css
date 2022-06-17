@@ -1,0 +1,98 @@
+.outer-grid-container {
+    display: grid;
+    background-color: lightgray;
+    grid-template-columns: 75% 25%;
+    gap: 10px;
+    border: 4px solid black;
+    border-radius: 4px;
+    box-shadow: 5px 5px darkgray;
+}
+
+.inner-grid-container {
+    display: grid;
+    background-color: lightgray;
+    grid-template-columns: 33% 33% 33%;
+    gap: 10px;
+}
+
+.edit-del-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.button {
+    margin: 3%;
+    border: none;
+    border-radius: 3px;
+    font-size: 25px;
+    color: white;
+}
+
+.green {
+    background-color: green;
+}
+
+.green:hover {
+    background-color: darkgreen;
+}
+
+.red {
+    background-color: red;
+}
+
+.red:hover {
+    background-color: darkred;
+}
+
+.flight-no {
+    color: blue;
+    font-size: 20px;
+    font-weight: bold;
+    opacity: 40%;
+    align-items: left;
+}
+
+.total-time {
+    font-size: 20px;
+    font-style: oblique;
+}
+
+.date {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.time {
+    font-size: 30px;
+}
+
+.airport {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.passengers {
+    color: blue;
+    font-size: 18px;
+    font-style: italic;
+}
+
+.left {
+    justify-content: left;
+}
+
+.blank {
+    justify-content: center;
+}
+
+.right {
+    justify-content: right;
+}
+
+.item {
+    display: flex;
+    padding-top: 1%;
+    padding-left: 3%;
+    padding-right: 3%;
+}

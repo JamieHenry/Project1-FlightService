@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const flightAPI = require('./routes/flight.route');
+const cors = require('cors');
 require('dotenv').config();
 
 // create app and set port w/ default 8080
@@ -8,6 +9,7 @@ const app = express();
 const PORT = process.env.PORT || 8080;
 
 // middleware
+app.use(cors());
 app.use(express.json());
 app.use('/flights', flightAPI);
 
