@@ -16,7 +16,7 @@ export const FlightList = () => {
         <>
             {flights.map(flight => {
                 return (
-                    <AppFlightCard key={flight._id} flight={flight}/>
+                    <AppFlightCard key={flight._id} flight={flight} margin='15px' />
                 );
             })}
         </>

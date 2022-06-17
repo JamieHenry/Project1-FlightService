@@ -1,7 +1,7 @@
 import { OuterContainer, InnerContainer, Item, TotalTime, Date, Airport, PassengerInfo, ButtonBox, Button, Time, FlightNo } from '../components/FlightCard'
 import arrow from '../assets/arrow.png';
 
-export const AppFlightCard = ({ flight }) => {
+export const AppFlightCard = ({ flight, margin }) => {
 
     const calcHourDiff = () => {
         const [startMonth, startDay, startYear] = flight.departureDate.split('/');
@@ -31,7 +31,7 @@ export const AppFlightCard = ({ flight }) => {
     }
 
     return (
-        <OuterContainer>
+        <OuterContainer margin={margin}>
             <InnerContainer>
                 <FlightNo>{flight.flightNumber}</FlightNo>
                 <Item />
