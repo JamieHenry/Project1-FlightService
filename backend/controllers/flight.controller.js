@@ -18,10 +18,6 @@ const findAllFlights = async () => {
  */
 const createFlight = async ({ flightNumber, departureDate, arrivalDate, departureTime, arrivalTime, departureAirport, arrivalAirport, currPassengers, passengerLimit }) => {
     try {
-        // validate current passengers vs. flight passenger limit
-        if (currPassengers > passengerLimit) {
-            throw { message: 'Current # passengers exceeds passenger limit' };
-        }
         const flight = new Flight({
             flightNumber,
             departureDate,
@@ -48,10 +44,6 @@ const createFlight = async ({ flightNumber, departureDate, arrivalDate, departur
  */
 const updateFlight = async ({ flightNumber, departureDate, arrivalDate, departureTime, arrivalTime, departureAirport, arrivalAirport, currPassengers, passengerLimit }) => {
     try {
-        // validate current passengers vs. flight passenger limit
-        if (currPassengers > passengerLimit) {
-            throw { message: 'Current # passengers exceeds passenger limit' };
-        }
         const updates = {
             flightNumber,
             departureDate,
