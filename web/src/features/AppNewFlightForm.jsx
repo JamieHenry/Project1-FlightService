@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { DateTimeInput, NumberInput, StringInput, FormButton, FormError } from '../components/FormComponent'
+import { DateTimeInput, NumberInput, StringInput, FormButton, FormError } from '../components/Form'
 
 export const validateInputs = inputs => {
     for (let field in inputs) {

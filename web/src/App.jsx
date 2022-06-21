@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { FlightList } from './components/FlightList/FlightList';
+import { FlightList } from './components/FlightList';
 import { AppNewFlightForm } from './features';
 
 function App() {
