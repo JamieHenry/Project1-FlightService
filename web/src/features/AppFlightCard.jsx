@@ -1,7 +1,8 @@
-import { OuterContainer, InnerContainer, Item, TotalTime, Date, Airport, PassengerInfo, ButtonBox, Button, Time, FlightNo } from '../components/FlightCard'
+import axios from 'axios';
+import { OuterContainer, InnerContainer, Item, TotalTime, Date, Airport, PassengerInfo, ButtonBox, Button, Time, FlightNo } from '../components/FlightCard';
 import arrow from '../assets/arrow.png';
 
-export const AppFlightCard = ({ flight, margin }) => {
+export const AppFlightCard = ({ flight, margin, updateFlights }) => {
 
     const calcHourDiff = () => {
         const [startMonth, startDay, startYear] = flight.departureDate.split('/');
@@ -30,6 +31,19 @@ export const AppFlightCard = ({ flight, margin }) => {
         return `${totalHour}h ${totalMin}m`;
     }
 
+    const editFlight = () => {
+        console.log(flight.flightNumber + " edit flight");
+    }
+
+    const deleteFlight = () => {
+        axios.delete(`http://localhost:8080/flights/${flight.flightNumber}`)
+            .then(res => {
+                console.log(res.data);
+                updateFlights();
+            })
+            .catch(err => console.log(err));
+    }
+
     return (
         <OuterContainer margin={margin}>
             <InnerContainer>
@@ -47,8 +61,8 @@ export const AppFlightCard = ({ flight, margin }) => {
                 <Airport jc='right'>{flight.arrivalAirport}</Airport>
             </InnerContainer>
             <ButtonBox>
-                <Button bc='green' bcHover='darkgreen' name='fa fa-edit' />
-                <Button bc='red' bcHover='darkred' name='fa fa-trash' />
+                <Button onClick={editFlight} bc='green' bcHover='darkgreen' name='fa fa-edit' />
+                <Button onClick={deleteFlight} bc='red' bcHover='darkred' name='fa fa-trash' />
             </ButtonBox>
         </OuterContainer>
     );

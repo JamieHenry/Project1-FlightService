@@ -28,7 +28,7 @@ function App() {
           Filter Container
       </div>
       <div style={{display: 'grid', gridTemplateColumns: '40% 60%', gap: '10px'}}>
-        <div><FlightList flights={currFlights} /></div>
+        <div><FlightList flights={currFlights} updateFlights={updateFlights} /></div>
         <div style={{backgroundColor: 'yellow', padding: '1em 1.5em', textAlign: 'center'}}>Update Form Container</div>
       </div>
     </>
