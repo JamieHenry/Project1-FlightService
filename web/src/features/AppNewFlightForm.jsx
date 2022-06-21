@@ -12,7 +12,7 @@ export const validInputs = inputs => {
     if (!validDates(departureDate, arrivalDate)) return { valid: false, msg: 'Invalid Date' };
     if (!validTimes(departureDate, arrivalDate, departureTime, arrivalTime)) return { valid: false, msg: 'Invalid Time' };
     if (parseInt(inputs.currPassengers) > parseInt(inputs.passengerLimit)) return { valid: false, msg: 'Invalid Passenger Count' };
-    if (inputs.departureAirport === inputs.arrivalAirport) return { valid: false, msg: 'Invalid Airports' };
+    if (inputs.departureAirport === inputs.arrivalAirport || inputs.departureAirport.length < 3 || inputs.arrivalAirport.length < 3) return { valid: false, msg: 'Invalid Airports' };
 
     const newFlight = {
         flightNumber: parseInt(inputs.flightNumber),
@@ -73,7 +73,7 @@ export const validTimes = (departureDate, arrivalDate, departureTime, arrivalTim
     return true;
 }
 
-export const AppNewFlightForm = () => {
+export const AppNewFlightForm = ({ updateFlights }) => {
 
     const saveNewFlight = e => {
         e.preventDefault();
@@ -97,7 +97,7 @@ export const AppNewFlightForm = () => {
 
         axios.post('http://localhost:8080/flights', validInputObj.newFlight)
             .then(() => {
-                window.location.reload(false);
+                updateFlights();
 
                 document.getElementById('flight-num').value = null;
                 document.getElementById('departure-date').value = null;
@@ -109,12 +109,12 @@ export const AppNewFlightForm = () => {
             })
             .catch(err => {
                 console.log(err);
-                document.getElementById('error').innerText = 'Database Error';
+                document.getElementById('error').innerText = err.response.data.message;
             });
     }   
 
     return(
-        <form onSubmit={'return false'}>
+        <form onSubmit={() => false}>
             <NumberInput id='flight-num' minValue={1}>Flight Number: </NumberInput>
             <DateTimeInput id='departure-date'>Departure Date: </DateTimeInput>
             <DateTimeInput id='arrival-date'>Arrival Date: </DateTimeInput>
