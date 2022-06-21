@@ -64,25 +64,25 @@ export const AppFlightCard = ({ flight, margin, updateFlights }) => {
         <>
             <ConfirmationModal showModal={displayConfirmation} confirmModal={submitDelete} hideModal={hideConfirmation} message={deleteMessage} />
             <OuterContainer margin={margin}>
-            <InnerContainer>
-                <FlightNo>{flight.flightNumber}</FlightNo>
-                <Item />
-                <TotalTime>{calcTotalTime()}</TotalTime>
-                <Date jc='left'>{flight.departureDate}</Date>
-                <Item />
-                <Date jc='right'>{flight.arrivalDate}</Date>
-                <Time jc='left'>{flight.departureTime}</Time>
-                <Item><img src={arrow} height='30px' alt='arrow' /></Item>
-                <Time jc='right'>{flight.arrivalTime}</Time>
-                <Airport jc='left'>{flight.departureAirport}</Airport>
-                <PassengerInfo passengerCount={flight.currPassengers} passengerLimit={flight.passengerLimit} />
-                <Airport jc='right'>{flight.arrivalAirport}</Airport>
-            </InnerContainer>
-            <ButtonBox>
-                <Button onClick={editFlight} bc='green' bcHover='darkgreen' name='fa fa-edit' />
-                <Button onClick={showDeleteModal} bc='red' bcHover='darkred' name='fa fa-trash' />
-            </ButtonBox>
-        </OuterContainer>
+                <InnerContainer>
+                    <FlightNo>{flight.flightNumber}</FlightNo>
+                    <Item />
+                    <TotalTime>{calcTotalTime()}</TotalTime>
+                    <Date jc='left'>{flight.departureDate}</Date>
+                    <Item />
+                    <Date jc='right'>{flight.arrivalDate}</Date>
+                    <Time jc='left'>{flight.departureTime}</Time>
+                    <Item><img src={arrow} height='30px' alt='arrow' /></Item>
+                    <Time jc='right'>{flight.arrivalTime}</Time>
+                    <Airport jc='left'>{flight.departureAirport}</Airport>
+                    <PassengerInfo passengerCount={flight.currPassengers} passengerLimit={flight.passengerLimit} />
+                    <Airport jc='right'>{flight.arrivalAirport}</Airport>
+                </InnerContainer>
+                <ButtonBox>
+                    <Button onClick={editFlight} bc='green' bcHover='darkgreen' name='fa fa-edit' />
+                    <Button onClick={showDeleteModal} bc='red' bcHover='darkred' name='fa fa-trash' />
+                </ButtonBox>
+            </OuterContainer>
         </> 
     );
 }

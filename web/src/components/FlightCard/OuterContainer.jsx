@@ -8,5 +8,5 @@ export const OuterContainer = styled.div`
     border: 4px solid black;
     border-radius: 4px;
     box-shadow: 5px 5px darkgray;
-    margin-bottom: ${({margin}) => margin ?? 'none'};
+    margin: ${({margin}) => margin ?? 'none'};
 `;
