@@ -1,16 +1,16 @@
 import axios from 'axios';
 import { DateTimeInput, NumberInput, StringInput, FormButton, FormError } from '../components/FormComponent'
 
-export const validInputs = inputs => {
-    for (let inp in inputs) {
-        if (inputs[inp] === '') return {valid: false, msg: 'Missing Input'};
+export const validateInputs = inputs => {
+    for (let field in inputs) {
+        if (inputs[field] === '') return {valid: false, msg: 'Missing Input'};
     }
 
     const [departureDate, departureTime] = convertDateTime(inputs.departureDateTime);
     const [arrivalDate, arrivalTime] = convertDateTime(inputs.arrivalDateTime);
 
-    if (!validDates(departureDate, arrivalDate)) return { valid: false, msg: 'Invalid Date' };
-    if (!validTimes(departureDate, arrivalDate, departureTime, arrivalTime)) return { valid: false, msg: 'Invalid Time' };
+    if (arrivalDate < departureDate) return { valid: false, msg: 'Invalid Date' };
+    if (arrivalTime <= departureTime && arrivalDate === departureDate) return { valid: false, msg: 'Invalid Time' };
     if (parseInt(inputs.currPassengers) > parseInt(inputs.passengerLimit)) return { valid: false, msg: 'Invalid Passenger Count' };
     if (inputs.departureAirport === inputs.arrivalAirport || inputs.departureAirport.length < 3 || inputs.arrivalAirport.length < 3) return { valid: false, msg: 'Invalid Airports' };
 
@@ -46,33 +46,6 @@ export const convertDateTime = dateTime => {
     return [date, time];
 }
 
-export const validDates = (departureDate, arrivalDate) => {
-    const [departureMonth, departureDay, departureYear] = departureDate.split('/');
-    const [arrivalMonth, arrivalDay, arrivalYear] = arrivalDate.split('/');
-
-    if (arrivalYear < departureYear) return false;
-    if (arrivalMonth < departureMonth && arrivalYear === departureYear) return false;
-    if (arrivalDay < departureDay && arrivalMonth === departureMonth) return false;
-
-    return true;
-}
-
-export const validTimes = (departureDate, arrivalDate, departureTime, arrivalTime) => {
-    const [departureMonth, departureDay, departureYear] = departureDate.split('/');
-    const [arrivalMonth, arrivalDay, arrivalYear] = arrivalDate.split('/');
-    const [departureTimeVal, departureAmPm] = departureTime.split(' ');
-    const [arrivalTimeVal, arrivalAmPm] = arrivalTime.split(' ');
-    const [departureHour, departureMin] = departureTimeVal.split(':');
-    const [arrivalHour, arrivalMin] = arrivalTimeVal.split(':');
-
-    if (departureMonth === arrivalMonth && departureDay === arrivalDay && departureYear === arrivalYear) {
-        if (arrivalHour < departureHour && arrivalAmPm === departureAmPm) return false;
-        if (arrivalMin <= departureMin && arrivalHour === departureHour) return false;
-    }
-
-    return true;
-}
-
 export const AppNewFlightForm = ({ updateFlights }) => {
 
     const saveNewFlight = e => {
@@ -89,13 +62,13 @@ export const AppNewFlightForm = ({ updateFlights }) => {
             passengerLimit: document.getElementById('passenger-limit').value
         };
 
-        const validInputObj = validInputs(inputs);
-        if (validInputObj.valid === false) {
-            document.getElementById('error').innerText = validInputObj.msg;
+        const validationResult = validateInputs(inputs);
+        if (validationResult.valid === false) {
+            document.getElementById('error').innerText = validationResult.msg;
             return;
         }
 
-        axios.post('http://localhost:8080/flights', validInputObj.newFlight)
+        axios.post('http://localhost:8080/flights', validationResult.newFlight)
             .then(() => {
                 updateFlights();
 
