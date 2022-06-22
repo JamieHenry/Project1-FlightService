@@ -1,13 +1,13 @@
 import axios from 'axios';
-import { DateTimeInput, NumberInput, StringInput, FormButton, FormError } from '../components/Form'
+import { DateTimeInput, NumberInput, StringInput, FormButton, FormError } from '../components/Form';
 
 export const validateInputs = inputs => {
     for (let field in inputs) {
         if (inputs[field] === '') return {valid: false, msg: 'Missing Input'};
     }
 
-    const [departureDate, departureTime] = convertDateTime(inputs.departureDateTime);
-    const [arrivalDate, arrivalTime] = convertDateTime(inputs.arrivalDateTime);
+    const [departureDate, departureTime] = convertFromDateTime(inputs.departureDateTime);
+    const [arrivalDate, arrivalTime] = convertFromDateTime(inputs.arrivalDateTime);
 
     if (arrivalDate < departureDate) return { valid: false, msg: 'Invalid Date' };
     if (arrivalTime <= departureTime && arrivalDate === departureDate) return { valid: false, msg: 'Invalid Time' };
@@ -29,7 +29,7 @@ export const validateInputs = inputs => {
     return {valid: true, newFlight};
 }
 
-export const convertDateTime = dateTime => {
+export const convertFromDateTime = dateTime => {
     let [date, time] = dateTime.split('T');
     let [year, month, day] = date.split('-');
 

@@ -3,10 +3,12 @@ import arrow from '../assets/arrow.png';
 import { useState } from 'react';
 import { ConfirmationModal } from '../components/ConfirmationModal';
 import { OuterContainer, InnerContainer, Item, TotalTime, Date, Airport, PassengerInfo, ButtonBox, Button, Time, FlightNo } from '../components/FlightCard';
+import { EditModal } from '../components/EditModal/EditModal';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export const AppFlightCard = ({ flight, margin, updateFlights }) => {
-
+    
+    const [displayEdit, setDisplayEdit] = useState(false);
     const [displayConfirmation, setDisplayConfirmation] = useState(false);
     const [deleteMessage, setDeleteMessage] = useState('');
 
@@ -37,12 +39,20 @@ export const AppFlightCard = ({ flight, margin, updateFlights }) => {
         return `${totalHour}h ${totalMin}m`;
     }
 
-    const editFlight = () => {
-        console.log(flight.flightNumber + " edit flight");
+    const showEditModal = () => {
+        setDisplayEdit(true);
+    }
+
+    const hideEdit = () => {
+        setDisplayEdit(false);
+    }
+
+    const submitEdit = () => {
+        setDisplayEdit(false);
     }
 
     const showDeleteModal = () => {
-        setDeleteMessage(`Are you sure you want to delete Flight: ${flight.flightNumber}?`);
+        setDeleteMessage(`Are you sure you want to delete Flight Number: ${flight.flightNumber}?`);
         setDisplayConfirmation(true);
     }
 
@@ -63,6 +73,7 @@ export const AppFlightCard = ({ flight, margin, updateFlights }) => {
     return (
         <>
             <ConfirmationModal showModal={displayConfirmation} confirmModal={submitDelete} hideModal={hideConfirmation} message={deleteMessage} />
+            <EditModal showModal={displayEdit} editModal={submitEdit} hideModal={hideEdit} flight={flight} updateFlights={updateFlights} />
             <OuterContainer margin={margin}>
                 <InnerContainer>
                     <FlightNo>{flight.flightNumber}</FlightNo>
@@ -79,7 +90,7 @@ export const AppFlightCard = ({ flight, margin, updateFlights }) => {
                     <Airport jc='right'>{flight.arrivalAirport}</Airport>
                 </InnerContainer>
                 <ButtonBox>
-                    <Button onClick={editFlight} bc='green' bcHover='darkgreen' name='fa fa-edit' />
+                    <Button onClick={showEditModal} bc='green' bcHover='darkgreen' name='fa fa-edit' />
                     <Button onClick={showDeleteModal} bc='red' bcHover='darkred' name='fa fa-trash' />
                 </ButtonBox>
             </OuterContainer>
