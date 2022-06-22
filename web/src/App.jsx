@@ -5,13 +5,16 @@ import { AppNewFlightForm } from './features';
 
 function App() {
   
+  // state for current flights in database
   const [currFlights, setCurrFlights] = useState([]);
 
+  // update current flights and set state
   const updateFlights = () => {
     axios.get('http://localhost:8080/flights')
       .then(res => setCurrFlights(res.data));
   }
 
+  // component mounting
   useEffect(() => {
     updateFlights();
   }, []);

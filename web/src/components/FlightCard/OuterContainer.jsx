@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+/**
+ * styling for whole card flex grid
+ *      holds button box and flight info div
+ */
 export const OuterContainer = styled.div`
     display: grid;
     background-color: lightgray;

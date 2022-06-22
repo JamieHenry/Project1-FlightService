@@ -1,3 +1,9 @@
+/**
+ * creates input component with appropiate label with passed in props
+ * 
+ * @params - destructured props
+ * @returns - DateTimeInput component
+ */
 export const DateTimeInput = ({ id, defaultValue, children }) => {
     return (
         <>

@@ -1,5 +1,8 @@
 import styled from 'styled-components';
-
+/**
+ * original item div for items on flight card
+ * shared styling with some variable options
+ */
 export const Item = styled.div`
     display: flex;
     padding-top: 1%;

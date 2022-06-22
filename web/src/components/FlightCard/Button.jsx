@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+/**
+ * allows for specified 'color', 'hover color', and 'on click event'
+ * styling for 'Button Item' on flight card (trash or edit)
+ */
 const Btn = styled.button`
         margin: 3%;
         border: none;

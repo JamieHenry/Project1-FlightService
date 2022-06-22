@@ -13,7 +13,7 @@ const findAllFlights = async () => {
 /**
  * creates a new flight
  * 
- * @params - dereferenced Flight object 
+ * @params - destructured Flight object 
  * @returns - newly created _id
  */
 const createFlight = async ({ flightNumber, departureDate, arrivalDate, departureTime, arrivalTime, departureAirport, arrivalAirport, currPassengers, passengerLimit }) => {
@@ -39,7 +39,7 @@ const createFlight = async ({ flightNumber, departureDate, arrivalDate, departur
 /**
  * updates a Flight based on unique Flight Number
  * 
- * @params - dereferenced Flight object (excluding _id)
+ * @params - destructured Flight object (excluding _id)
  * @returns - updated Flight object
  */
 const updateFlight = async ({ flightNumber, departureDate, arrivalDate, departureTime, arrivalTime, departureAirport, arrivalAirport, currPassengers, passengerLimit }) => {

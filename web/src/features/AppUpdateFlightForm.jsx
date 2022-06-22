@@ -2,24 +2,48 @@ import axios from 'axios';
 import { DateTimeInput, NumberInput, StringInput, FormButton, FormError } from '../components/Form';
 import { validateInputs } from './AppNewFlightForm';
 
+/**
+ * takes in date and time and combines into a formatted string
+ *      that date-time input and use
+ * 
+ * @param {String} date - date with format: 'mm/dd/yyyy'
+ * @param {String} time - time with format: 'hh:mm (A|P)M'
+ * @returns - formatted string for date-time input ('yyyy-mm-ddThh:mm')
+ */
 export const convertToDateTime = (date, time) => {
+    // split into corresponding values
     const [month, day, year] = date.split('/');
     const [hourMin, amPm] = time.split(' ');
     let [hour, min] = hourMin.split(':');
 
+    // convert time to 24-hour format based on AM|PM value
     if (amPm === 'PM') {
         hour = parseInt(hour) + 12;
     }
 
+    // format and return string
     return `${year}-${month}-${day}T${hour}:${min}`;
 }
 
-export const AppUpdateFlightForm = ({ flight, updateFlights, onClick }) => {
+/**
+ * create a form that handles updating an existing flight in the database
+ * 
+ * @params - destructured currentFlight for editing, updateFlights function, and submitEdit function 
+ * @returns - AppUpdateFlightForm component
+ */
+export const AppUpdateFlightForm = ({ flight, updateFlights, closeEditModal }) => {
     
+    /**
+     * save user input and update flight to database if input is valid
+     * 
+     * @param {event} e - used to prevent default (refresh page)
+     */
     const submitEdit = e => {
+        // prevent page refresh and reset error div
         e.preventDefault();
         document.getElementById('error-edit').innerText = null;
 
+        // get user input values
         const inputs = {
             flightNumber: flight.flightNumber,
             departureDateTime: document.getElementById('departure-date-edit').value,
@@ -30,16 +54,21 @@ export const AppUpdateFlightForm = ({ flight, updateFlights, onClick }) => {
             passengerLimit: document.getElementById('passenger-limit-edit').value
         };
 
+        // validate user input and store result
         const validationResult = validateInputs(inputs);
+
+        // if validation is false, display error message and exit function
         if (validationResult.valid === false) {
             document.getElementById('error-edit').innerText = validationResult.msg;
             return;
         }
 
+        // validation passed, send put request with validated flight object
         axios.put('http://localhost:8080/flights', validationResult.newFlight)
             .then(() => {
+                // after successful put, update current flight list and close edit modal
                 updateFlights();
-                onClick();
+                closeEditModal();
             })
             .catch(err => {
                 console.log(err);

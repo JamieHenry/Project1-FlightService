@@ -1,6 +1,13 @@
 import styled from "styled-components";
 
-export const ErrorDiv = styled.div`
+/**
+ * creates styled error div with passed in props
+ * 
+ * @params - destructured props
+ * @returns - FormError component
+ */
+
+ const ErrorDiv = styled.div`
     color: red;
     text-align: center;
     justify-content: center;

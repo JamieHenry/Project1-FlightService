@@ -1,3 +1,9 @@
+/**
+ * creates input component with appropiate label with passed in props
+ * 
+ * @params - destructured props
+ * @returns - NumberInput component
+ */
 export const NumberInput = ({ id, minValue, defaultValue, children }) => {
     return (
         <>

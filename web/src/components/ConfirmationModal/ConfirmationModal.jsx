@@ -1,5 +1,15 @@
 import { Modal, Button } from 'react-bootstrap';
 
+/**
+ * modal for popping up to confirm current flight deletion 
+ *      (accessed from flight card's button)
+ * upon confirmation, modal will close and delete request will be sent to
+ *      database
+ * 
+ * @params - destructured  showModal function, hideModal function, confirmDeletion function,
+ *              and flight specific delete message
+ * @returns - Modal for deletion confirmation
+ */
 export const ConfirmationModal = ({ showModal, hideModal, confirmModal, message }) => {
     return (
         <Modal show={showModal} onHide={hideModal}>
