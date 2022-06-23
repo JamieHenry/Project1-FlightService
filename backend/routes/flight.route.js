@@ -1,14 +1,62 @@
 const router = require('express').Router();
 const { findAllFlights, createFlight, updateFlight, deleteFlight } = require('../controllers/flight.controller');
 
+// Schema setup for swagger docs
+/**
+ * @swagger
+ * components:
+ *      schemas:
+ *          Flight:
+ *              type: object
+ *              required:
+ *                  - flightNumber
+ *                  - departureDate
+ *                  - arrivalDate
+ *                  - departureTime
+ *                  - arrivalTime
+ *                  - departureAirport
+ *                  - arrivalAirport
+ *                  - currPassengers
+ *                  - passengerLimit
+ *              properties:
+ *                  flightNumber:
+ *                      type: integer
+ *                  departureDate:
+ *                      type: string
+ *                  arrivalDate:
+ *                      type: string
+ *                  departureTime:
+ *                      type: string
+ *                  arrivalTime:
+ *                      type: string
+ *                  departureAirport:
+ *                      type: string
+ *                  arrivalAirport:
+ *                      type: string
+ *                  currPassengers:
+ *                      type: integer
+ *                  passengerLimit:
+ *                      type: integer
+ *              example:
+ *                  flightNumber: 123
+ *                  departureDate: 06/23/2022
+ *                  arrivalDate: 06/23/2022
+ *                  departureTime: 09:00 AM
+ *                  arrivalTime: 03:56 PM
+ *                  departureAirport: MCO
+ *                  arrivalAirport: HNL
+ *                  currPassengers: 17
+ *                  passengerLimit: 125
+ */
+
 // GET - return all flights
 /**
  * @swagger
  * /flights:
  *      get:
- *          description: Get all flights
+ *          summary: Gets all flights
  *          tags:
- *          - flight
+ *          - Flights
  *          responses:
  *              200:
  *                  description: Success
@@ -24,46 +72,18 @@ router.get('/', async (req, res) => {
 
 // POST - create a new flight
 /**
- *  @swagger
+ * @swagger
  * /flights:
  *      post:
- *          description: Create a new flight
+ *          summary: Creates a new flight
  *          tags:
- *          - flight
- *          parameters:
- *          - in: body
- *            name: request
- *            schema: 
- *              type: object
- *              required:
- *              - flightNumber
- *              - departureDate
- *              - arrivalDate
- *              - departureTime
- *              - arrivalTime
- *              - departureAirport
- *              - arrivalAirport
- *              - currPassengers
- *              - passengerLimit
- *              properties:
- *                  flightNumber:
- *                      type: number
- *                  departureDate:
- *                      type: string
- *                  arrivalDate:
- *                      type: string
- *                  departureTime:
- *                      type: string
- *                  arrivalTime:
- *                      type: string
- *                  departureAirport:
- *                      type: string
- *                  arrivalAirport:
- *                      type: string
- *                  currPassengers:
- *                      type: number
- *                  passengerLimit:
- *                      type: number
+ *          - Flights
+ *          requestBody:
+ *              required: true
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/Flight'
  *          responses:
  *              200:
  *                  description: Success
@@ -83,46 +103,18 @@ router.post('/', async (req, res) => {
 
 // PUT - update a flight
 /**
- *  @swagger
+ * @swagger
  * /flights:
  *      put:
- *          description: Update flight specified by flightNumber field
+ *          summary: Updates flight specified by flightNumber field
  *          tags:
- *          - flight
- *          parameters:
- *          - in: body
- *            name: request
- *            schema: 
- *              type: object
- *              required:
- *              - flightNumber
- *              - departureDate
- *              - arrivalDate
- *              - departureTime
- *              - arrivalTime
- *              - departureAirport
- *              - arrivalAirport
- *              - currPassengers
- *              - passengerLimit
- *              properties:
- *                  flightNumber:
- *                      type: number
- *                  departureDate:
- *                      type: string
- *                  arrivalDate:
- *                      type: string
- *                  departureTime:
- *                      type: string
- *                  arrivalTime:
- *                      type: string
- *                  departureAirport:
- *                      type: string
- *                  arrivalAirport:
- *                      type: string
- *                  currPassengers:
- *                      type: number
- *                  passengerLimit:
- *                      type: number
+ *          - Flights
+ *          requestBody:
+ *              required: true
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/Flight'
  *          responses:
  *              200:
  *                  description: Success
@@ -143,12 +135,12 @@ router.put('/', async (req, res) => {
 // DELETE - delete a specific flight
 //        - identified with Flight Number
 /**
- *  @swagger
+ * @swagger
  * /flights/{id}:
  *      delete:
- *          description: Delete a flight specified by flightNumber field
+ *          summary: Deletes a flight specified by flightNumber field
  *          tags:
- *          - flight
+ *          - Flights
  *          parameters:
  *          - in: path
  *            name: id

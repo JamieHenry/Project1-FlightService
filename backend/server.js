@@ -14,6 +14,7 @@ const MONGO_URI = process.env.DEVELOPMENT ? process.env.DEVELOPMENT_MONGO_URI : 
 // set up swagger docs
 const options = {
     definition: {
+        openapi: '3.0.0',
         info: {
             title: 'Project1-FlightService',
             version: '1.0.0',
@@ -23,7 +24,7 @@ const options = {
             }
         }
     },
-    apis: ['./routes/flight.route.js']
+    apis: ['./routes/*.js']
 };
 
 const swaggerSpec = swaggerJsDoc(options);
