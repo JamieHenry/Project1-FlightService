@@ -3,6 +3,7 @@
     "version": "1.0.0",
     "scripts": {
       "start": "npm run start --prefix backend",
+      "test": "npm run test --prefix web",
       "postinstall": "npm install --prefix web && npm install --prefix backend && npm run build --prefix web"
     },
     "cacheDirectories": [
