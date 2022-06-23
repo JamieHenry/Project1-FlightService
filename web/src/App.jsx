@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { FlightList } from './components/FlightList';
+import { AppFlightList } from './features';
 import { AppNewFlightForm } from './features';
 
 function App() {
@@ -31,7 +31,7 @@ function App() {
           Filter Container
       </div>
       <div style={{ display: 'grid', gridTemplateColumns: '50% 50%' }}>
-        <FlightList flights={currFlights} updateFlights={updateFlights} />
+        <AppFlightList flights={currFlights} updateFlights={updateFlights} />
       </div>
     </>
   );
