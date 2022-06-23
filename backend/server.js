@@ -1,5 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const swaggerUi = require('swagger-ui-express');
+const swaggerJsDoc = require('swagger-jsdoc');
 const flightAPI = require('./routes/flight.route');
 const cors = require('cors');
 require('dotenv').config();
@@ -9,10 +11,28 @@ const app = express();
 const PORT = process.env.PORT || 8080;
 const MONGO_URI = process.env.DEVELOPMENT ? process.env.DEVELOPMENT_MONGO_URI : process.env.PRODUCTION_MONGO_URI;
 
+// set up swagger docs
+const options = {
+    definition: {
+        info: {
+            title: 'Project1-FlightService',
+            version: '1.0.0',
+            contact: {
+                name: 'FlightService App',
+                url: 'http://localhost:3000'
+            }
+        }
+    },
+    apis: ['./routes/flight.route.js']
+};
+
+const swaggerSpec = swaggerJsDoc(options);
+
 // middleware
 app.use(cors());
 app.use(express.json());
 app.use('/flights', flightAPI);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // database connection
 mongoose.connect(MONGO_URI)
