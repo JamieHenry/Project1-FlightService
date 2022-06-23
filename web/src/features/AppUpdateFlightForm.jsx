@@ -17,8 +17,12 @@ export const convertToDateTime = (date, time) => {
     let [hour, min] = hourMin.split(':');
 
     // convert time to 24-hour format based on AM|PM value
-    if (amPm === 'PM') {
+    // check for 12 AM|PM edge cases
+    if (amPm === 'PM' && hour !== '12') {
         hour = parseInt(hour) + 12;
+    }
+    if (amPm === 'AM' && hour === '12') {
+        hour = '00';
     }
 
     // format and return string

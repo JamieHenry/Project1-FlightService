@@ -20,15 +20,21 @@ export const validateInputs = inputs => {
     const [departureDate, departureTime] = convertFromDateTime(inputs.departureDateTime);
     const [arrivalDate, arrivalTime] = convertFromDateTime(inputs.arrivalDateTime);
 
+    // split up arrival/departure date into corresponding month, day, year values
+    const [departureMonth, departureDay, departureYear] = departureDate.split('/');
+    const [arrivalMonth, arrivalDay, arrivalYear] = arrivalDate.split('/');
+
     // checking for valid dates, times, passengers, airports
     //      - arrival date must be after departure date
     //      - arrival time must be after departure time unless dates are different
     //      - current passenger count must be below or equal to passenger limit
     //      - arrival/departure airport must be not equal and be 3 letters in length
-    if (arrivalDate < departureDate) return { valid: false, msg: 'Invalid Date' };
+    if (arrivalYear < departureYear) return { valid: false, msg: 'Invalid Date' };
+    if (arrivalMonth < departureMonth && arrivalYear === departureYear) return { valid: false, msg: 'Invalid Date' };
+    if (arrivalDay < departureDay && arrivalMonth === departureMonth && arrivalYear === departureYear) return { valid: false, msg: 'Invalid Date' };
     if (arrivalTime <= departureTime && arrivalDate === departureDate) return { valid: false, msg: 'Invalid Time' };
     if (parseInt(inputs.currPassengers) > parseInt(inputs.passengerLimit)) return { valid: false, msg: 'Invalid Passenger Count' };
-    if (inputs.departureAirport === inputs.arrivalAirport || inputs.departureAirport.length < 3 || inputs.arrivalAirport.length < 3) return { valid: false, msg: 'Invalid Airports' };
+    if (inputs.departureAirport === inputs.arrivalAirport || inputs.departureAirport.length < 3 || inputs.arrivalAirport.length < 3) return { valid: false, msg: 'Invalid Airport' };
 
     // creating new Flight object with correct fields for schema
     const newFlight = {
@@ -62,10 +68,16 @@ export const convertFromDateTime = dateTime => {
     let [hour, min] = time.split(':');
 
     // convert hour to 12-hour format, adding in lost 0 if needed
+    // catching edge case of 12 being 12PM
+    // catching edge case of 00 being 12AM
     // then re-format time
-    if (hour > 12) {
+    if (hour > '12') {
         hour = parseInt(hour) - 12;
         time = hour >= 10 ? `${hour}:${min} PM` : `0${hour}:${min} PM`;
+    } else if (hour === '12') {
+        time = `12:${min} PM`;
+    } else if (hour === '00') {
+        time = `12:${min} AM`;
     } else {
         time = `${hour}:${min} AM`;
     }
