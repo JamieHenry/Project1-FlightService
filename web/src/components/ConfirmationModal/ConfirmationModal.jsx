@@ -10,13 +10,13 @@ import { Modal, Button } from 'react-bootstrap';
  *              and flight specific delete message
  * @returns - Modal for deletion confirmation
  */
-export const ConfirmationModal = ({ showModal, hideModal, confirmModal, message }) => {
+export const ConfirmationModal = ({ showModal, hideModal, confirmModal, flightNumber }) => {
     return (
         <Modal show={showModal} onHide={hideModal}>
             <Modal.Header closeButton>
             <Modal.Title>Delete Confirmation</Modal.Title>
             </Modal.Header>
-            <Modal.Body><div className="alert alert-danger">{message}</div></Modal.Body>
+            <Modal.Body><div className="alert alert-danger">Are you sure you want to delete Flight Number: {flightNumber}?</div></Modal.Body>
             <Modal.Footer>
             <Button variant="default" onClick={hideModal}>
                 Cancel

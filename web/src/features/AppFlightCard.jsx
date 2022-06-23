@@ -17,7 +17,6 @@ export const AppFlightCard = ({ flight, margin, updateFlights }) => {
     // states for delete/edit modal
     const [displayEdit, setDisplayEdit] = useState(false);
     const [displayConfirmation, setDisplayConfirmation] = useState(false);
-    const [deleteMessage, setDeleteMessage] = useState('');
 
     /**
      * calculates the hour difference between arrival/departure date
@@ -59,12 +58,6 @@ export const AppFlightCard = ({ flight, margin, updateFlights }) => {
         return `${totalHour}h ${totalMin}m`;
     }
 
-    // set confirmation modal message and display it
-    const showDeleteModal = () => {
-        setDeleteMessage(`Are you sure you want to delete Flight Number: ${flight.flightNumber}?`);
-        setDisplayConfirmation(true);
-    }
-
     // confirmed delete sent to database, then close confirmation
     const submitDelete = () => {
         axios.delete(`http://localhost:8080/flights/${flight.flightNumber}`)
@@ -78,7 +71,7 @@ export const AppFlightCard = ({ flight, margin, updateFlights }) => {
 
     return (
         <>
-            <ConfirmationModal showModal={displayConfirmation} confirmModal={submitDelete} hideModal={() => setDisplayConfirmation(false)} message={deleteMessage} />
+            <ConfirmationModal showModal={displayConfirmation} confirmModal={submitDelete} hideModal={() => setDisplayConfirmation(false)} flightNumber={flight.flightNumber} />
             <EditModal showModal={displayEdit} editModal={() => setDisplayEdit(false)} hideModal={() => setDisplayEdit(false)} flight={flight} updateFlights={updateFlights} />
             <OuterContainer margin={margin}>
                 <InnerContainer>
@@ -97,7 +90,7 @@ export const AppFlightCard = ({ flight, margin, updateFlights }) => {
                 </InnerContainer>
                 <ButtonBox>
                     <Button onClick={() => setDisplayEdit(true)} bc='green' bcHover='darkgreen' name='fa fa-edit' />
-                    <Button onClick={showDeleteModal} bc='red' bcHover='darkred' name='fa fa-trash' />
+                    <Button onClick={() => setDisplayConfirmation(true)} bc='red' bcHover='darkred' name='fa fa-trash' />
                 </ButtonBox>
             </OuterContainer>
         </> 
