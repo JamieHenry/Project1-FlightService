@@ -3,7 +3,7 @@ import arrow from '../assets/arrow.png';
 import { useState } from 'react';
 import { ConfirmationModal } from '../components/ConfirmationModal';
 import { OuterContainer, InnerContainer, Item, TotalTime, Date, Airport, PassengerInfo, ButtonBox, Button, Time, FlightNo } from '../components/FlightCard';
-import { EditModal } from '../components/EditModal/EditModal';
+import { EditModal } from '../components/EditModal';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 /**
