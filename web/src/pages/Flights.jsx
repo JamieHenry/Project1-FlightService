@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { AppFlightList } from '../features';
 import { AppNewFlightForm } from '../features';
 
-export const Home = () => {
+export const Flights = () => {
 
     // state for current flights in database
     const [currFlights, setCurrFlights] = useState([]);
@@ -21,9 +21,6 @@ export const Home = () => {
 
     return (
         <>
-            <div style={{ backgroundColor: 'green', padding: '1em 1.5em', textAlign: 'center' }}>
-            Nav Bar
-            </div>
             <div style={{ backgroundColor: 'lightgray', padding: '1em 1.5em', textAlign: 'center' }}>
                 <AppNewFlightForm updateFlights={updateFlights}/>
             </div>

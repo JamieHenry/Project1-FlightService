@@ -9,8 +9,8 @@ export const OuterContainer = styled.div`
     background-color: lightgray;
     grid-template-columns: 75% 25%;
     gap: 10px;
-    border: 4px solid black;
-    border-radius: 4px;
+    border: 1px solid black;
+    border-radius: 3px;
     box-shadow: 5px 5px darkgray;
     margin: ${({margin}) => margin ?? 'none'};
 `;
