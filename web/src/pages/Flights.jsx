@@ -13,7 +13,12 @@ export const Flights = () => {
 
     // apply filters to current flights and set state
     const filterFlights = filters => {
-        console.log('filter: ', filters);
+        console.log('Filtering');
+        for (let prop in filters) {
+            if (filters[prop] !== '') {
+                console.log(prop);
+            }
+        }
     }
 
     // update current flights and set state

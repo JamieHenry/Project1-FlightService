@@ -153,7 +153,7 @@ export const AppNewFlightForm = ({ updateFlights }) => {
             <StringInput id='arrival-airport'>Arrival Airport: </StringInput>
             <NumberInput id='current-passengers' minValue={0}>Current Passengers: </NumberInput>
             <NumberInput id='passenger-limit' minValue={1}>Passenger Limit: </NumberInput>
-            <FormButton onClick={saveNewFlight} />
+            <FormButton onClick={saveNewFlight} text='Save' />
             <FormError id='error'></FormError>
         </form>
     );
