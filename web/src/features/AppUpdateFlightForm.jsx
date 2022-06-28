@@ -104,7 +104,7 @@ export const AppUpdateFlightForm = ({ flight, updateFlights, closeEditModal }) =
                 <FormError id='error-edit'></FormError>
             </div>
             <div>
-                <FormButton onClick={submitEdit} />
+                <FormButton onClick={submitEdit} text='Save' />
             </div>
         </form>
     );
