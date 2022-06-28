@@ -1,6 +1,11 @@
 import dropdown from '../../assets/dropdown.png';
 import styled from 'styled-components';
 
+/**
+ * 
+ * @param {Function} onClick - onClick function for executing 
+ * @returns - custom button with dropdown image
+ */
 const CustomButton = styled.button`
     background-color: transparent;
     border: none;

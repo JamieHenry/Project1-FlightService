@@ -2,6 +2,10 @@ import airplane from '../assets/airplane.png';
 import { Center } from './Error';
 import { Button } from 'react-bootstrap';
 
+/**
+ * 
+ * @returns - simple home page with app logo and button to go to Flights page
+ */
 export const Landing =() => {
     return (
         <>

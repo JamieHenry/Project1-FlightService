@@ -1,10 +1,15 @@
 import sadplane from '../assets/sadplane.png';
 import styled from 'styled-components';
 
+/**
+ * 
+ * @returns - Error component with centered items
+ */
 export const Center = styled.div`
     display: flex;
     justify-content: center;
 `;
+
 
 export const Error =() => {
 

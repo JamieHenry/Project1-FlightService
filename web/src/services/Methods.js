@@ -154,4 +154,91 @@ const convertFromDateTime = dateTime => {
     return ((parseInt(endMonth) - parseInt(startMonth)) * 730) +( (parseInt(endDay) - parseInt(startDay)) * 24) + ((parseInt(endYear) - parseInt(startYear)) * 8760);
 }
 
-module.exports = { validateInputs, convertFromDateTime, convertToDateTime, calcTotalTime, calcHourDiff };
+/**
+     * compares if first date value comes 
+     *      after second date value (greater than)
+     * 
+     * @param {String} date1 
+     * @param {String} date2 
+     * @returns - true if date1 >= date2, false otherwise
+     */
+ const compareDates = (date1, date2) => {
+    const [monthValue, dayValue, yearValue] = date1.split('/');
+    const [monthFilter, dayFilter, yearFilter] = date2.split('/');
+
+    if (yearValue > yearFilter) return true;
+    if (monthValue > monthFilter && yearValue === yearFilter) return true;
+    if (dayValue >= dayFilter && monthValue === monthFilter && yearValue === yearFilter) return true;
+
+    return false;
+}
+
+/**
+ * compares if first time value comes 
+ *      after or is equal to second time value (greater than)
+ * 
+ * @param {String} time1 - format: 'hh:mm (A|P)M'
+ * @param {String} time2 - format: 'hh:mm (A|P)M'
+ * @returns - true if time1 >= time2, false otherwise
+ */
+const compareTimes = (time1, time2) => {
+    let [hourMinValue, amPmValue] = time1.split(' ');
+    let [filterHourMin, filterAmPm] = time2.split(' ');
+    let [hourValue, minValue] = hourMinValue.split(':');
+    let [filterHour, filterMin] = filterHourMin.split(':');
+
+    // correct PM times by adding 12 hours
+    // also catch 12 AM time by making it have a value of 0
+    if (amPmValue === 'PM') hourValue = parseInt(hourValue) + 12;
+    if (filterAmPm === 'PM') filterHour = parseInt(filterHour) + 12;
+    if (amPmValue === 'AM' && hourValue === '12') hourValue = 0;
+    if (filterAmPm === 'AM' && filterHour === '12') filterHour = 0;
+
+    if (hourValue > filterHour) return true;
+    if (minValue >= filterMin && hourValue === filterHour) return true;
+
+    return false;
+}
+
+/**
+     * converts JavaScript input date to date format
+     *      used throughout the applicaiton
+     * 
+     * @param {String} date - format: 'yyyy-mm-dd'
+     * @returns - new date String in format: 'mm/dd/yyyy'
+     */
+ const convertDate = date => {
+    let [year, month, day] = date.split('-');
+
+    return `${month}/${day}/${year}`;
+}
+
+/**
+ * converts JavaScript input time to time format
+ *      used throughout the applicaiton
+ * 
+ * @param {String} time - format: 'hh:mm'
+ * @returns - new time String in format: 'hh:mm (A|P)M'
+ */
+const convertTime = time => {
+    let [hour, min] = time.split(':');
+
+    // convert hour to 12-hour format, adding in lost 0 if needed
+    // catching edge case of 12 being 12PM
+    // catching edge case of 00 being 12AM
+    // then re-format time
+    if (hour > '12') {
+        hour = parseInt(hour) - 12;
+        time = hour >= 10 ? `${hour}:${min} PM` : `0${hour}:${min} PM`;
+    } else if (hour === '12') {
+        time = `12:${min} PM`;
+    } else if (hour === '00') {
+        time = `12:${min} AM`;
+    } else {
+        time = `${hour}:${min} AM`;
+    }
+
+    return time;
+}
+
+module.exports = { validateInputs, convertFromDateTime, convertToDateTime, calcTotalTime, calcHourDiff, compareDates, compareTimes, convertDate, convertTime };

@@ -1,6 +1,12 @@
 import { NavBar, NavItem, NavSection, NavLink } from '../components/Nav';
 import airplane from '../assets/airplane.png';
 
+/**
+ * create NavBar with logo on left side linking to landing page
+ *      and two links on right side linking to landing and flghts page
+ * 
+ * @returns - NavBar with 3 links
+ */
 export const AppNavBar = () => {
     return (
         <NavBar>

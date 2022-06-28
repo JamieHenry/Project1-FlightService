@@ -1,4 +1,4 @@
-import { validateInputs, convertFromDateTime, convertToDateTime, calcTotalTime, calcHourDiff } from './Methods';
+import { validateInputs, convertFromDateTime, convertToDateTime, calcTotalTime, calcHourDiff, compareDates, compareTimes, convertDate, convertTime } from './Methods';
 
 /* Edge Cases For Validating Inputs
     1. Only one input value is missing

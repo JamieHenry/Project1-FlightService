@@ -2,8 +2,15 @@ import { DateInput, NumberInput, StringInput, FormButton, TimeInput } from '../c
 import { useState } from 'react';
 import { XButton } from '../components/XButton';
 
+/**
+ * filter form for filtering out the flight list being displayed
+ * 
+ * @params - destructured functions for filtering and updating flight list
+ * @returns - filter form component
+ */
 export const AppFlightFilter = ({ filterFlights, updateFlights }) => {
     
+    // states for all filters
     const [currFilters, setCurrFilters] = useState({});
     const [filtersActive, setFiltersActive] = useState(false);
     const [startDateFilter, setStartDateFilter] = useState('');
@@ -14,13 +21,22 @@ export const AppFlightFilter = ({ filterFlights, updateFlights }) => {
     const [arrivalAirportFilter, setArrivalAirportFilter] = useState('');
     const [availableSeatsFilter, setAvailableSeatsFilter] = useState('');
 
+    /**
+     * convert filters where necessary (date and time) and
+     *      sends the filters object to filter flights function
+     * 
+     * @param {event} e - used to prevent default (refresh page)
+     */
     const applyFilters = e => {
         e.preventDefault();
+
+        // populate values with their previous values if they are active still
         let startDate = (startDateFilter !== '') ? startDateFilter : document.getElementById('start-date-filter').value;
         let endDate = (endDateFilter !== '') ? endDateFilter : document.getElementById('end-date-filter').value;
         let startTime = (startTimeFilter !== '') ? startTimeFilter : document.getElementById('start-time-filter').value;
         let endTime = (endTimeFilter !== '') ? endTimeFilter : document.getElementById('end-time-filter').value;
         
+        // convert date/time values if they are not already changed or not filled in
         if (startDate !== '' && startDate.includes('-')) {
             startDate = convertDate(startDate);
         }
@@ -34,6 +50,7 @@ export const AppFlightFilter = ({ filterFlights, updateFlights }) => {
             endTime = convertTime(endTime);
         }
         
+        // create filters object to send off
         const filters = {
             startDate,
             startTime,
@@ -44,13 +61,16 @@ export const AppFlightFilter = ({ filterFlights, updateFlights }) => {
             availableSeats: (availableSeatsFilter !== '') ? availableSeatsFilter : document.getElementById('available-seats-filter').value
         };
 
+        // check if any filters are active and set boolean state
         for (let prop in filters) {
             if (filters[prop] !== '') setFiltersActive(true);
         }
 
+        // set current active filters and send filter object to filter function
         filterFlights(filters);
         setCurrFilters(filters);
 
+        // set filters to appropiate values and reset form inputs
         setStartDateFilter(filters.startDate);
         setStartTimeFilter(filters.startTime);
         setEndDateFilter(filters.endDate);
@@ -67,9 +87,18 @@ export const AppFlightFilter = ({ filterFlights, updateFlights }) => {
         document.getElementById('available-seats-filter').value = null;
     }
 
+    /**
+     * clear all active filters and reset flight list being displayed
+     * 
+     * @param {Event} e - used to prevent default (refresh page)
+     */
     const clearAllFilters = e => {
         e.preventDefault();
+
+        // update flight list to be full flight list with update function
         updateFlights();
+
+        // clear all filters and set boolean state
         setFiltersActive(false);
         setStartDateFilter('');
         setStartTimeFilter('');
@@ -80,13 +109,20 @@ export const AppFlightFilter = ({ filterFlights, updateFlights }) => {
         setAvailableSeatsFilter('');
     }
 
+    /**
+     * clear inputted filter and set active filters accordingly
+     * 
+     * @param {String} filterCleared - current filter being cleared
+     */
     const clearOneFilter = filterCleared => {
         let filters = currFilters;
 
+        // change current filters object based on passed in field
         filters[filterCleared] = '';
         setCurrFilters(filters);
         filterFlights(filters);
 
+        // reset appropiate filter based on input
         switch (filterCleared) {
             case 'startDate':
                 setStartDateFilter('');
@@ -111,6 +147,7 @@ export const AppFlightFilter = ({ filterFlights, updateFlights }) => {
                 break;
         }
 
+        // check if any filters are null and set boolean state to false if so
         for (let prop in filters) {
             if (filters[prop] !== '') return;
         }
@@ -118,12 +155,26 @@ export const AppFlightFilter = ({ filterFlights, updateFlights }) => {
         setFiltersActive(false);
     }
 
+    /**
+     * converts JavaScript input date to date format
+     *      used throughout the applicaiton
+     * 
+     * @param {String} date - format: 'yyyy-mm-dd'
+     * @returns - new date String in format: 'mm/dd/yyyy'
+     */
     const convertDate = date => {
         let [year, month, day] = date.split('-');
 
         return `${month}/${day}/${year}`;
     }
 
+    /**
+     * converts JavaScript input time to time format
+     *      used throughout the applicaiton
+     * 
+     * @param {String} time - format: 'hh:mm'
+     * @returns - new time String in format: 'hh:mm (A|P)M'
+     */
     const convertTime = time => {
         let [hour, min] = time.split(':');
 
