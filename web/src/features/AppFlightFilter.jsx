@@ -16,21 +16,21 @@ export const AppFlightFilter = ({ filterFlights, updateFlights }) => {
 
     const applyFilters = e => {
         e.preventDefault();
-        let startDate = document.getElementById('start-date-filter').value;
-        let endDate = document.getElementById('end-date-filter').value;
-        let startTime = document.getElementById('start-time-filter').value;
-        let endTime = document.getElementById('end-time-filter').value;
+        let startDate = (startDateFilter !== '') ? startDateFilter : document.getElementById('start-date-filter').value;
+        let endDate = (endDateFilter !== '') ? endDateFilter : document.getElementById('end-date-filter').value;
+        let startTime = (startTimeFilter !== '') ? startTimeFilter : document.getElementById('start-time-filter').value;
+        let endTime = (endTimeFilter !== '') ? endTimeFilter : document.getElementById('end-time-filter').value;
         
-        if (startDate !== '') {
+        if (startDate !== '' && startDate.includes('-')) {
             startDate = convertDate(startDate);
         }
-        if (endDate !== '') {
+        if (endDate !== '' && endDate.includes('-')) {
             endDate = convertDate(endDate);
         }
-        if (startTime !== '') {
+        if (startTime !== '' && !startTime.includes('M')) {
             startTime = convertTime(startTime);
         }
-        if (endTime !== '') {
+        if (endTime !== '' && !endTime.includes('M')) {
             endTime = convertTime(endTime);
         }
         
@@ -39,9 +39,9 @@ export const AppFlightFilter = ({ filterFlights, updateFlights }) => {
             startTime,
             endDate,
             endTime,
-            departureAirport: document.getElementById('departure-airport-filter').value,
-            arrivalAirport: document.getElementById('arrival-airport-filter').value,
-            availableSeats: document.getElementById('available-seats-filter').value
+            departureAirport: (departureAirportFilter !== '') ? departureAirportFilter : document.getElementById('departure-airport-filter').value,
+            arrivalAirport: (arrivalAirportFilter !== '') ? arrivalAirportFilter : document.getElementById('arrival-airport-filter').value,
+            availableSeats: (availableSeatsFilter !== '') ? availableSeatsFilter : document.getElementById('available-seats-filter').value
         };
 
         for (let prop in filters) {
@@ -51,13 +51,13 @@ export const AppFlightFilter = ({ filterFlights, updateFlights }) => {
         filterFlights(filters);
         setCurrFilters(filters);
 
-        setStartDateFilter(startDate);
-        setStartTimeFilter(startTime);
-        setEndDateFilter(endDate);
-        setEndTimeFilter(endTime);
-        setDepartureAirportFilter(document.getElementById('departure-airport-filter').value);
-        setArrivalAirportFilter(document.getElementById('arrival-airport-filter').value);
-        setAvailableSeatsFilter(document.getElementById('available-seats-filter').value);
+        setStartDateFilter(filters.startDate);
+        setStartTimeFilter(filters.startTime);
+        setEndDateFilter(filters.endDate);
+        setEndTimeFilter(filters.endTime);
+        setDepartureAirportFilter(filters.departureAirport);
+        setArrivalAirportFilter(filters.arrivalAirport);
+        setAvailableSeatsFilter(filters.availableSeats);
         document.getElementById('start-date-filter').value = null;
         document.getElementById('end-date-filter').value = null;
         document.getElementById('start-time-filter').value = null;
