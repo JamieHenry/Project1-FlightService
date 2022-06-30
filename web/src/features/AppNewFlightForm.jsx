@@ -144,8 +144,14 @@ export const AppNewFlightForm = ({ updateFlights }) => {
             });
     }
     
+    /**
+     * clear user input in form
+     * 
+     * @param {event} e - used to prevent default (refresh page)
+     */
     const clearInputs = e => {
         e.preventDefault();
+
         // reset user input fields
         document.getElementById('flight-num').value = null;
         document.getElementById('departure-date').value = null;

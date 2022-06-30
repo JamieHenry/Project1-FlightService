@@ -80,8 +80,15 @@ export const AppUpdateFlightForm = ({ flight, updateFlights, closeEditModal }) =
             });
     }
 
+    /**
+     * clear user input in form to original flight values
+     * 
+     * @param {event} e - used to prevent default (refresh page)
+     */
     const clearInputs = e => {
         e.preventDefault();
+
+        // reset user input fields to original values
         document.getElementById('departure-date-edit').value = convertToDateTime(flight.departureDate, flight.departureTime);
         document.getElementById('arrival-date-edit').value = convertToDateTime(flight.arrivalDate, flight.arrivalTime);
         document.getElementById('departure-airport-edit').value = flight.departureAirport;
