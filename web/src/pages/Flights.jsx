@@ -73,6 +73,8 @@ export const Flights = () => {
                             return (flight.passengerLimit - flight.currPassengers) >= filterVal;
                         });
                         break;
+                    default:
+                        break;
                 }
             }
         }
@@ -152,7 +154,7 @@ export const Flights = () => {
             <div style={{ borderBottom: '2px solid', backgroundColor: 'lightgray', padding: '1em 1.5em', textAlign: 'center', marginBottom: '15px'}}>
             <Center>
                     <h3>Filter Flights</h3>
-                    <DropDownButton onClick={() => setShowFilters(!showFilters)} />
+                    <DropDownButton onClick={() => { updateFlights(); setShowFilters(!showFilters); }} />
                 </Center>
                 {showFilters && <AppFlightFilter filterFlights={filterFlights} updateFlights={updateFlights} />}
             </div>

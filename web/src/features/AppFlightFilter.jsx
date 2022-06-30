@@ -145,6 +145,8 @@ export const AppFlightFilter = ({ filterFlights, updateFlights }) => {
             case 'availableSeats':
                 setAvailableSeatsFilter('');
                 break;
+            default:
+                break;
         }
 
         // check if any filters are null and set boolean state to false if so
