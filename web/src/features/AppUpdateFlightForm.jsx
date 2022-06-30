@@ -80,6 +80,16 @@ export const AppUpdateFlightForm = ({ flight, updateFlights, closeEditModal }) =
             });
     }
 
+    const clearInputs = e => {
+        e.preventDefault();
+        document.getElementById('departure-date-edit').value = convertToDateTime(flight.departureDate, flight.departureTime);
+        document.getElementById('arrival-date-edit').value = convertToDateTime(flight.arrivalDate, flight.arrivalTime);
+        document.getElementById('departure-airport-edit').value = flight.departureAirport;
+        document.getElementById('arrival-airport-edit').value = flight.arrivalAirport;
+        document.getElementById('current-passengers-edit').value = flight.currPassengers;
+        document.getElementById('passenger-limit-edit').value = flight.passengerLimit;
+    }
+
     return(
         <form onSubmit={() => false}>
             <div>
@@ -105,6 +115,9 @@ export const AppUpdateFlightForm = ({ flight, updateFlights, closeEditModal }) =
             </div>
             <div>
                 <FormButton onClick={submitEdit} text='Save' />
+            </div>
+            <div>
+                <FormButton onClick={clearInputs} text='Clear' />
             </div>
         </form>
     );

@@ -142,7 +142,19 @@ export const AppNewFlightForm = ({ updateFlights }) => {
                 console.log(err);
                 document.getElementById('error').innerText = err.response.data.message;
             });
-    }   
+    }
+    
+    const clearInputs = e => {
+        e.preventDefault();
+        // reset user input fields
+        document.getElementById('flight-num').value = null;
+        document.getElementById('departure-date').value = null;
+        document.getElementById('arrival-date').value = null;
+        document.getElementById('departure-airport').value = null;
+        document.getElementById('arrival-airport').value = null;
+        document.getElementById('current-passengers').value = null;
+        document.getElementById('passenger-limit').value = null;
+    }
 
     return(
         <form onSubmit={() => false}>
@@ -154,6 +166,7 @@ export const AppNewFlightForm = ({ updateFlights }) => {
             <NumberInput id='current-passengers' minValue={0}>Current Passengers: </NumberInput>
             <NumberInput id='passenger-limit' minValue={1}>Passenger Limit: </NumberInput>
             <FormButton onClick={saveNewFlight} text='Save' />
+            <FormButton onClick={clearInputs} text='Clear' />
             <FormError id='error'></FormError>
         </form>
     );
