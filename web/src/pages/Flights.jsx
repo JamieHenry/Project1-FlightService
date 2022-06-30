@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { Center } from '../pages/Error';
 import { DropDownButton } from '../components/DropDownButton/DropDownButton';
 import { AppFlightList, AppNewFlightForm, AppFlightFilter } from '../features';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 /**
  * 

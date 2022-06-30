@@ -1,4 +1,5 @@
 import { AppFlightCard } from './AppFlightCard';
+import { Center } from '../pages/Error';
 import 'font-awesome/css/font-awesome.min.css';
 
 /**
@@ -10,6 +11,9 @@ import 'font-awesome/css/font-awesome.min.css';
 export const AppFlightList = ({ flights, updateFlights }) => {
     return (
         <>
+            {flights.length === 0 && <Center gc='1/3'>
+                <div className='alert alert-info'>No Flights Matching Filters</div>
+            </Center>}
             {flights.map(flight => {
                 return (
                     <AppFlightCard key={flight._id} flight={flight} margin='15px' updateFlights={updateFlights} />
