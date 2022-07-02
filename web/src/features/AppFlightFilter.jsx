@@ -1,6 +1,7 @@
 import { DateInput, NumberInput, StringInput, FormButton, TimeInput } from '../components/Form';
 import { useState } from 'react';
 import { XButton } from '../components/XButton';
+import { useRef } from 'react';
 
 /**
  * filter form for filtering out the flight list being displayed
@@ -21,6 +22,15 @@ export const AppFlightFilter = ({ filterFlights, updateFlights }) => {
     const [arrivalAirportFilter, setArrivalAirportFilter] = useState('');
     const [availableSeatsFilter, setAvailableSeatsFilter] = useState('');
 
+    // references for filter input
+    const startDateInput = useRef();
+    const startTimeInput = useRef();
+    const endDateInput = useRef();
+    const endTimeInput = useRef();
+    const departureAirportInput = useRef();
+    const arrivalAirportInput = useRef();
+    const availableSeatsInput = useRef();
+
     /**
      * convert filters where necessary (date and time) and
      *      sends the filters object to filter flights function
@@ -31,10 +41,10 @@ export const AppFlightFilter = ({ filterFlights, updateFlights }) => {
         e.preventDefault();
 
         // populate values with their previous values if they are active still
-        let startDate = (startDateFilter !== '') ? startDateFilter : document.getElementById('start-date-filter').value;
-        let endDate = (endDateFilter !== '') ? endDateFilter : document.getElementById('end-date-filter').value;
-        let startTime = (startTimeFilter !== '') ? startTimeFilter : document.getElementById('start-time-filter').value;
-        let endTime = (endTimeFilter !== '') ? endTimeFilter : document.getElementById('end-time-filter').value;
+        let startDate = (startDateFilter !== '') ? startDateFilter : startDateInput.current.value;
+        let endDate = (endDateFilter !== '') ? endDateFilter : endDateInput.current.value;
+        let startTime = (startTimeFilter !== '') ? startTimeFilter : startTimeInput.current.value;
+        let endTime = (endTimeFilter !== '') ? endTimeFilter : endTimeInput.current.value;
         
         // convert date/time values if they are not already changed or not filled in
         if (startDate !== '' && startDate.includes('-')) {
@@ -56,9 +66,9 @@ export const AppFlightFilter = ({ filterFlights, updateFlights }) => {
             startTime,
             endDate,
             endTime,
-            departureAirport: (departureAirportFilter !== '') ? departureAirportFilter : document.getElementById('departure-airport-filter').value,
-            arrivalAirport: (arrivalAirportFilter !== '') ? arrivalAirportFilter : document.getElementById('arrival-airport-filter').value,
-            availableSeats: (availableSeatsFilter !== '') ? availableSeatsFilter : document.getElementById('available-seats-filter').value
+            departureAirport: (departureAirportFilter !== '') ? departureAirportFilter : departureAirportInput.current.value,
+            arrivalAirport: (arrivalAirportFilter !== '') ? arrivalAirportFilter : arrivalAirportInput.current.value,
+            availableSeats: (availableSeatsFilter !== '') ? availableSeatsFilter : availableSeatsInput.current.value
         };
 
         // check if any filters are active and set boolean state
@@ -78,13 +88,13 @@ export const AppFlightFilter = ({ filterFlights, updateFlights }) => {
         setDepartureAirportFilter(filters.departureAirport);
         setArrivalAirportFilter(filters.arrivalAirport);
         setAvailableSeatsFilter(filters.availableSeats);
-        document.getElementById('start-date-filter').value = null;
-        document.getElementById('end-date-filter').value = null;
-        document.getElementById('start-time-filter').value = null;
-        document.getElementById('end-time-filter').value = null;
-        document.getElementById('departure-airport-filter').value = null;
-        document.getElementById('arrival-airport-filter').value = null;
-        document.getElementById('available-seats-filter').value = null;
+        startDateInput.current.value = null;
+        endDateInput.current.value = null;
+        startDateInput.current.value = null;
+        endTimeInput.current.value = null;
+        departureAirportInput.current.value = null;
+        arrivalAirportInput.current.value = null;
+        availableSeatsInput.current.value = null;
     }
 
     /**
@@ -201,13 +211,13 @@ export const AppFlightFilter = ({ filterFlights, updateFlights }) => {
     return(
         <>
             <form onSubmit={() => false}>
-                <DateInput id='start-date-filter'>Start Date: </DateInput>
-                <TimeInput id='start-time-filter'>Departure Time: </TimeInput>
-                <DateInput id='end-date-filter'>End Date: </DateInput>
-                <TimeInput id='end-time-filter'>Arrival Time: </TimeInput>
-                <StringInput id='departure-airport-filter'>Departure Airport: </StringInput>
-                <StringInput id='arrival-airport-filter'>Arrival Airport: </StringInput>
-                <NumberInput id='available-seats-filter' minValue={1}>Available Seats: </NumberInput>
+                <DateInput id='start-date-filter' innerRef={startDateInput}>Start Date: </DateInput>
+                <TimeInput id='start-time-filter' innerRef={startTimeInput}>Departure Time: </TimeInput>
+                <DateInput id='end-date-filter' innerRef={endDateInput}>End Date: </DateInput>
+                <TimeInput id='end-time-filter' innerRef={endTimeInput}>Arrival Time: </TimeInput>
+                <StringInput id='departure-airport-filter' innerRef={departureAirportInput}>Departure Airport: </StringInput>
+                <StringInput id='arrival-airport-filter' innerRef={arrivalAirportInput}>Arrival Airport: </StringInput>
+                <NumberInput id='available-seats-filter' innerRef={availableSeatsInput} minValue={1}>Available Seats: </NumberInput>
                 <FormButton onClick={applyFilters} text='Apply' />
                 <FormButton onClick={clearAllFilters} text='Clear' />
             </form>

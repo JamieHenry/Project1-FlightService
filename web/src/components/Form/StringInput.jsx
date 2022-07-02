@@ -4,11 +4,11 @@
  * @params - destructured props
  * @returns - StringInput component
  */
-export const StringInput = ({ id, defaultValue, children }) => {
+export const StringInput = ({ id, innerRef, defaultValue, children }) => {
     return (
         <>
             <label htmlFor={id}>{children}</label>
-            <input type='text' id={id} name='string-input' minLength ={3} maxLength={3} style={{width: '50px'}} defaultValue={defaultValue} placeholder={defaultValue} />
+            <input type='text' id={id} ref={innerRef} name='string-input' minLength ={3} maxLength={3} style={{width: '50px'}} defaultValue={defaultValue} placeholder={defaultValue} />
         </>
     );
 }

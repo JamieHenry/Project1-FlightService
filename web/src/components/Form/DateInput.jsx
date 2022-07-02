@@ -4,11 +4,11 @@
  * @params - destructured props
  * @returns - DateInput component
  */
- export const DateInput = ({ id, defaultValue, children }) => {
+ export const DateInput = ({ id, innerRef, defaultValue, children }) => {
     return (
         <>
             <label htmlFor={id}>{children}</label>
-            <input type='date' id={id} name='date' defaultValue={defaultValue} placeholder={defaultValue} />
+            <input type='date' id={id} ref={innerRef} name='date' defaultValue={defaultValue} placeholder={defaultValue} />
         </>
     );
 }

@@ -4,11 +4,11 @@
  * @params - destructured props
  * @returns - TimeInput component
  */
- export const TimeInput = ({ id, defaultValue, children }) => {
+ export const TimeInput = ({ id, innerRef, defaultValue, children }) => {
     return (
         <>
             <label htmlFor={id}>{children}</label>
-            <input type='time' id={id} name='time' defaultValue={defaultValue} placeholder={defaultValue} />
+            <input type='time' id={id} ref={innerRef} name='time' defaultValue={defaultValue} placeholder={defaultValue} />
         </>
     );
 }

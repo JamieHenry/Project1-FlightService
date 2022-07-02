@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { DateTimeInput, NumberInput, StringInput, FormButton, FormError } from '../components/Form';
 import { validateInputs } from './AppNewFlightForm';
+import { useRef, useState } from 'react';
 
 /**
  * takes in date and time and combines into a formatted string
@@ -37,6 +38,17 @@ export const convertToDateTime = (date, time) => {
  */
 export const AppUpdateFlightForm = ({ flight, updateFlights, closeEditModal }) => {
     
+    // state for error message
+    const [error, setError] = useState('');
+
+    // references for data input
+    const departureDateTimeInput = useRef();
+    const arrivalDateTimeInput = useRef();
+    const departureAirportInput = useRef();
+    const arrivalAirportInput = useRef();
+    const currPassengersInput = useRef();
+    const passengerLimitInput = useRef();
+
     /**
      * save user input and update flight to database if input is valid
      * 
@@ -45,17 +57,17 @@ export const AppUpdateFlightForm = ({ flight, updateFlights, closeEditModal }) =
     const submitEdit = e => {
         // prevent page refresh and reset error div
         e.preventDefault();
-        document.getElementById('error-edit').innerText = null;
+        setError('');
 
         // get user input values
         const inputs = {
             flightNumber: flight.flightNumber,
-            departureDateTime: document.getElementById('departure-date-edit').value,
-            arrivalDateTime: document.getElementById('arrival-date-edit').value,
-            departureAirport: document.getElementById('departure-airport-edit').value,
-            arrivalAirport: document.getElementById('arrival-airport-edit').value,
-            currPassengers: document.getElementById('current-passengers-edit').value,
-            passengerLimit: document.getElementById('passenger-limit-edit').value
+            departureDateTime: departureDateTimeInput.current.value,
+            arrivalDateTime: arrivalDateTimeInput.current.value,
+            departureAirport: departureAirportInput.current.value,
+            arrivalAirport: arrivalAirportInput.current.value,
+            currPassengers: currPassengersInput.current.value,
+            passengerLimit: passengerLimitInput.current.value
         };
 
         // validate user input and store result
@@ -63,7 +75,7 @@ export const AppUpdateFlightForm = ({ flight, updateFlights, closeEditModal }) =
 
         // if validation is false, display error message and exit function
         if (validationResult.valid === false) {
-            document.getElementById('error-edit').innerText = validationResult.msg;
+            setError(validationResult.msg);
             return;
         }
 
@@ -76,7 +88,7 @@ export const AppUpdateFlightForm = ({ flight, updateFlights, closeEditModal }) =
             })
             .catch(err => {
                 console.log(err);
-                document.getElementById('error-edit').innerText = err.response.data.message;
+                setError(err.response.data.message);
             });
     }
 
@@ -87,38 +99,39 @@ export const AppUpdateFlightForm = ({ flight, updateFlights, closeEditModal }) =
      */
     const clearInputs = e => {
         e.preventDefault();
+        setError('');
 
         // reset user input fields to original values
-        document.getElementById('departure-date-edit').value = convertToDateTime(flight.departureDate, flight.departureTime);
-        document.getElementById('arrival-date-edit').value = convertToDateTime(flight.arrivalDate, flight.arrivalTime);
-        document.getElementById('departure-airport-edit').value = flight.departureAirport;
-        document.getElementById('arrival-airport-edit').value = flight.arrivalAirport;
-        document.getElementById('current-passengers-edit').value = flight.currPassengers;
-        document.getElementById('passenger-limit-edit').value = flight.passengerLimit;
+        departureDateTimeInput.current.value = convertToDateTime(flight.departureDate, flight.departureTime);
+        arrivalDateTimeInput.current.value = convertToDateTime(flight.arrivalDate, flight.arrivalTime);
+        departureAirportInput.current.value = flight.departureAirport;
+        arrivalAirportInput.current.value = flight.arrivalAirport;
+        currPassengersInput.current.value = flight.currPassengers;
+        passengerLimitInput.current.value = flight.passengerLimit;
     }
 
     return(
         <form onSubmit={() => false}>
             <div>
-                <DateTimeInput id='departure-date-edit' defaultValue={convertToDateTime(flight.departureDate, flight.departureTime)}>Departure Date: </DateTimeInput>
+                <DateTimeInput id='departure-date-edit' innerRef={departureDateTimeInput} defaultValue={convertToDateTime(flight.departureDate, flight.departureTime)}>Departure Date: </DateTimeInput>
             </div>
             <div>
-                <DateTimeInput id='arrival-date-edit' defaultValue={convertToDateTime(flight.arrivalDate, flight.arrivalTime)}>Arrival Date: </DateTimeInput>
+                <DateTimeInput id='arrival-date-edit' innerRef={arrivalDateTimeInput} defaultValue={convertToDateTime(flight.arrivalDate, flight.arrivalTime)}>Arrival Date: </DateTimeInput>
             </div>
             <div>
-                <StringInput id='departure-airport-edit' defaultValue={flight.departureAirport}>Departure Airport: </StringInput>
+                <StringInput id='departure-airport-edit' innerRef={departureAirportInput} defaultValue={flight.departureAirport}>Departure Airport: </StringInput>
             </div>
             <div>
-                <StringInput id='arrival-airport-edit' defaultValue={flight.arrivalAirport}>Arrival Airport: </StringInput>
+                <StringInput id='arrival-airport-edit' innerRef={arrivalAirportInput} defaultValue={flight.arrivalAirport}>Arrival Airport: </StringInput>
             </div>
             <div>
-                <NumberInput id='current-passengers-edit' minValue={0} defaultValue={flight.currPassengers}>Current Passengers: </NumberInput>
+                <NumberInput id='current-passengers-edit' innerRef={currPassengersInput} minValue={0} defaultValue={flight.currPassengers}>Current Passengers: </NumberInput>
             </div>
             <div>
-                <NumberInput id='passenger-limit-edit' minValue={1} defaultValue={flight.passengerLimit}>Passenger Limit: </NumberInput>
+                <NumberInput id='passenger-limit-edit' innerRef={passengerLimitInput} minValue={1} defaultValue={flight.passengerLimit}>Passenger Limit: </NumberInput>
             </div>
             <div>
-                <FormError id='error-edit'></FormError>
+                <FormError id='error-edit'>{error}</FormError>
             </div>
             <div>
                 <FormButton onClick={submitEdit} text='Save' />

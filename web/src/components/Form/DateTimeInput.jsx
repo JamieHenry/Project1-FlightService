@@ -4,11 +4,11 @@
  * @params - destructured props
  * @returns - DateTimeInput component
  */
-export const DateTimeInput = ({ id, defaultValue, children }) => {
+export const DateTimeInput = ({ id, innerRef, defaultValue, children }) => {
     return (
         <>
             <label htmlFor={id}>{children}</label>
-            <input type='datetime-local' id={id} name='datetime-input' defaultValue={defaultValue} placeholder={defaultValue} />
+            <input type='datetime-local' id={id} ref={innerRef} name='datetime-input' defaultValue={defaultValue} placeholder={defaultValue} />
         </>
     );
 }
