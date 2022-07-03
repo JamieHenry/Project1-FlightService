@@ -2,6 +2,7 @@ import { DateInput, NumberInput, StringInput, FormButton, TimeInput } from '../c
 import { useState } from 'react';
 import { XButton } from '../components/XButton';
 import { useRef } from 'react';
+import { Form } from 'react-bootstrap';
 
 /**
  * filter form for filtering out the flight list being displayed
@@ -210,19 +211,39 @@ export const AppFlightFilter = ({ filterFlights, updateFlights }) => {
 
     return(
         <>
-            <form onSubmit={() => false}>
-                <DateInput id='start-date-filter' innerRef={startDateInput}>Start Date: </DateInput>
-                <TimeInput id='start-time-filter' innerRef={startTimeInput}>Departure Time: </TimeInput>
-                <DateInput id='end-date-filter' innerRef={endDateInput}>End Date: </DateInput>
-                <TimeInput id='end-time-filter' innerRef={endTimeInput}>Arrival Time: </TimeInput>
-                <StringInput id='departure-airport-filter' innerRef={departureAirportInput}>Departure Airport: </StringInput>
-                <StringInput id='arrival-airport-filter' innerRef={arrivalAirportInput}>Arrival Airport: </StringInput>
-                <NumberInput id='available-seats-filter' innerRef={availableSeatsInput} minValue={1}>Available Seats: </NumberInput>
-                <FormButton onClick={applyFilters} text='Apply' />
-                <FormButton onClick={clearAllFilters} text='Clear' />
-            </form>
+            <Form onSubmit={() => false}>
+                <div className='container'>
+                    <div className='row'>
+                        <div className='col-sm'>
+                            <DateInput id='start-date-filter' innerRef={startDateInput}>Start Date: </DateInput>
+                        </div>
+                        <div className='col-sm'>
+                            <TimeInput id='start-time-filter' innerRef={startTimeInput}>Departure Time: </TimeInput>
+                        </div>
+                        <div className='col-sm'>    
+                            <DateInput id='end-date-filter' innerRef={endDateInput}>End Date: </DateInput>
+                        </div>
+                        <div className='col-sm'>    
+                            <TimeInput id='end-time-filter' innerRef={endTimeInput}>Arrival Time: </TimeInput>
+                        </div>
+                        <div className='col-sm'>    
+                            <StringInput id='departure-airport-filter' innerRef={departureAirportInput}>Departure Airport: </StringInput>
+                        </div>
+                        <div className='col-sm'>    
+                            <StringInput id='arrival-airport-filter' innerRef={arrivalAirportInput}>Arrival Airport: </StringInput>
+                        </div>
+                        <div className='col-sm'>    
+                            <NumberInput id='available-seats-filter' innerRef={availableSeatsInput} minValue={1}>Available Seats: </NumberInput>
+                        </div>
+                        <div style={{gap: '20px', marginTop: '15px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                            <FormButton onClick={applyFilters} text='Apply' />
+                            <FormButton onClick={clearAllFilters} text='Clear' />
+                        </div>
+                    </div>
+                </div>
+            </Form>
             <div>
-                {filtersActive && <h3>Active Filters: </h3>}
+                {filtersActive && <h3 style={{marginTop: '15px'}}>Active Filters: </h3>}
                 {startDateFilter && 
                     <h6>
                         Start Date: {startDateFilter}

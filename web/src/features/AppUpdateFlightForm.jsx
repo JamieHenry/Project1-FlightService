@@ -2,6 +2,7 @@ import axios from 'axios';
 import { DateTimeInput, NumberInput, StringInput, FormButton, FormError } from '../components/Form';
 import { validateInputs } from './AppNewFlightForm';
 import { useRef, useState } from 'react';
+import { Form } from 'react-bootstrap';
 
 /**
  * takes in date and time and combines into a formatted string
@@ -111,34 +112,18 @@ export const AppUpdateFlightForm = ({ flight, updateFlights, closeEditModal }) =
     }
 
     return(
-        <form onSubmit={() => false}>
-            <div>
-                <DateTimeInput id='departure-date-edit' innerRef={departureDateTimeInput} defaultValue={convertToDateTime(flight.departureDate, flight.departureTime)}>Departure Date: </DateTimeInput>
-            </div>
-            <div>
-                <DateTimeInput id='arrival-date-edit' innerRef={arrivalDateTimeInput} defaultValue={convertToDateTime(flight.arrivalDate, flight.arrivalTime)}>Arrival Date: </DateTimeInput>
-            </div>
-            <div>
-                <StringInput id='departure-airport-edit' innerRef={departureAirportInput} defaultValue={flight.departureAirport}>Departure Airport: </StringInput>
-            </div>
-            <div>
-                <StringInput id='arrival-airport-edit' innerRef={arrivalAirportInput} defaultValue={flight.arrivalAirport}>Arrival Airport: </StringInput>
-            </div>
-            <div>
-                <NumberInput id='current-passengers-edit' innerRef={currPassengersInput} minValue={0} defaultValue={flight.currPassengers}>Current Passengers: </NumberInput>
-            </div>
-            <div>
-                <NumberInput id='passenger-limit-edit' innerRef={passengerLimitInput} minValue={1} defaultValue={flight.passengerLimit}>Passenger Limit: </NumberInput>
-            </div>
-            <div>
-                <FormError id='error-edit'>{error}</FormError>
-            </div>
-            <div>
+        <Form onSubmit={() => false}>
+            <DateTimeInput id='departure-date-edit' innerRef={departureDateTimeInput} defaultValue={convertToDateTime(flight.departureDate, flight.departureTime)}>Departure Date: </DateTimeInput>
+            <DateTimeInput id='arrival-date-edit' innerRef={arrivalDateTimeInput} defaultValue={convertToDateTime(flight.arrivalDate, flight.arrivalTime)}>Arrival Date: </DateTimeInput>
+            <StringInput id='departure-airport-edit' innerRef={departureAirportInput} defaultValue={flight.departureAirport}>Departure Airport: </StringInput>
+            <StringInput id='arrival-airport-edit' innerRef={arrivalAirportInput} defaultValue={flight.arrivalAirport}>Arrival Airport: </StringInput>
+            <NumberInput id='current-passengers-edit' innerRef={currPassengersInput} minValue={0} defaultValue={flight.currPassengers}>Current Passengers: </NumberInput>
+            <NumberInput id='passenger-limit-edit' innerRef={passengerLimitInput} minValue={1} defaultValue={flight.passengerLimit}>Passenger Limit: </NumberInput>
+            <FormError id='error-edit'>{error}</FormError>
+            <div style={{gap: '20px', marginTop: '15px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
                 <FormButton onClick={submitEdit} text='Save' />
-            </div>
-            <div>
                 <FormButton onClick={clearInputs} text='Clear' />
             </div>
-        </form>
+        </Form>
     );
 }

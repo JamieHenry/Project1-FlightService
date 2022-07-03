@@ -1,3 +1,5 @@
+import { Button } from 'react-bootstrap';
+
 /**
  * creates input button with passed in props
  * 
@@ -5,7 +7,24 @@
  * @returns - FormButton component
  */
 export const FormButton = ({ text, onClick }) => {
+
+    let variant = '';
+
+    switch(text) {
+        case 'Save':
+            variant = 'outline-success';
+            break;
+        case 'Clear':
+            variant = 'outline-secondary';
+            break;
+        case 'Apply':
+            variant = 'outline-primary';
+            break;
+        default:
+            break;
+    }
+
     return (
-        <button onClick={onClick} type='submit'>{text}</button>
+        <Button variant={variant} onClick={onClick} type='submit'>{text}</Button>
     );
 }

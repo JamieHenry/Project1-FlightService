@@ -1,3 +1,5 @@
+import { Form } from 'react-bootstrap';
+
 /**
  * creates input component with appropiate label with passed in props
  * 
@@ -6,9 +8,9 @@
  */
 export const NumberInput = ({ id, innerRef, minValue, defaultValue, children }) => {
     return (
-        <>
-            <label htmlFor={id}>{children}</label>
-            <input type='number' id={id} ref={innerRef} name='number-input' min={minValue} style={{width: '50px'}} defaultValue={defaultValue} placeholder={defaultValue} />
-        </>
+        <Form.Group>
+            <Form.Label htmlFor={id}>{children}</Form.Label>
+            <Form.Control type='number' id={id} ref={innerRef} name='number-input' min={minValue} defaultValue={defaultValue} placeholder={defaultValue} />
+        </Form.Group>
     );
 }

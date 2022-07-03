@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useRef, useState } from 'react';
+import { Form } from 'react-bootstrap';
 import { DateTimeInput, NumberInput, StringInput, FormButton, FormError } from '../components/Form';
 
 /**
@@ -178,17 +179,39 @@ export const AppNewFlightForm = ({ updateFlights }) => {
     }
 
     return(
-        <form onSubmit={() => false}>
-            <NumberInput id='flight-num' innerRef={flightNumInput} minValue={1}>Flight Number: </NumberInput>
-            <DateTimeInput id='departure-date' innerRef={departureDateTimeInput}>Departure Date: </DateTimeInput>
-            <DateTimeInput id='arrival-date' innerRef={arrivalDateTimeInput}>Arrival Date: </DateTimeInput>
-            <StringInput id='departure-airport' innerRef={departureAirportInput}>Departure Airport: </StringInput>
-            <StringInput id='arrival-airport' innerRef={arrivalAirportInput}>Arrival Airport: </StringInput>
-            <NumberInput id='current-passengers' innerRef={currPassengersInput} minValue={0}>Current Passengers: </NumberInput>
-            <NumberInput id='passenger-limit' innerRef={passengerLimitInput} minValue={1}>Passenger Limit: </NumberInput>
-            <FormButton onClick={saveNewFlight} text='Save' />
-            <FormButton onClick={clearInputs} text='Clear' />
-            <FormError id='error'>{error}</FormError>
-        </form>
+        <Form className='form-horizontal' onSubmit={() => false}>
+            <div className='container'>
+                <div className='row'>
+                    <div className='col-sm'>
+                        <NumberInput id='flight-num' innerRef={flightNumInput} minValue={1}>Flight Number: </NumberInput>
+                    </div>
+                    <div className='col-sm'>
+                        <DateTimeInput id='departure-date' innerRef={departureDateTimeInput}>Departure Date: </DateTimeInput>
+                    </div>
+                    <div className='col-sm'>
+                    <DateTimeInput id='arrival-date' innerRef={arrivalDateTimeInput}>Arrival Date: </DateTimeInput>
+                    </div>
+                    <div className='col-sm'>
+                    <StringInput id='departure-airport' innerRef={departureAirportInput}>Departure Airport: </StringInput>
+                    </div>
+                    <div className='col-sm'>
+                    <StringInput id='arrival-airport' innerRef={arrivalAirportInput}>Arrival Airport: </StringInput>
+                    </div>
+                    <div className='col-sm'>
+                    <NumberInput id='current-passengers' innerRef={currPassengersInput} minValue={0}>Curr Passengers: </NumberInput>
+                    </div>
+                    <div className='col-sm'>
+                    <NumberInput id='passenger-limit' innerRef={passengerLimitInput} minValue={1}>Passenger Limit: </NumberInput>
+                    </div>
+                </div>
+                <div className='col-sm'>
+                    <FormError id='error'>{error}</FormError>
+                </div>
+                <div style={{gap: '20px', marginTop: '15px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                    <FormButton onClick={saveNewFlight} text='Save' />
+                    <FormButton onClick={clearInputs} text='Clear' />
+                </div>
+            </div>
+        </Form>
     );
 }

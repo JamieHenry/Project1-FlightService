@@ -18,10 +18,10 @@ export const ConfirmationModal = ({ showModal, hideModal, confirmModal, flightNu
             </Modal.Header>
             <Modal.Body><div className="alert alert-danger">Are you sure you want to delete Flight Number: {flightNumber}?</div></Modal.Body>
             <Modal.Footer>
-            <Button variant="default" onClick={hideModal}>
+            <Button variant="outline-dark" onClick={hideModal}>
                 Cancel
             </Button>
-            <Button variant="danger" onClick={confirmModal}>
+            <Button variant="outline-danger" onClick={confirmModal}>
                 Delete
             </Button>
             </Modal.Footer>
