@@ -225,15 +225,15 @@ it('validates inputs', () => {
 });
 
 /* Edge Cases For Converting from DateTime 
-    ****FORMAT FROM JAVASCRIPT INPUT = 'YYYY-MM-DDTHH:MM'****
+    ****FORMAT FROM JAVASCRIPT INPUT = 'YYYY-MM-DDThh:mm'****
     1. DateTime Input has hour value of 00
-        - Expected = date: 'MM/DD/YYYY', time: '12:MM AM'
+        - Expected = date: 'MM/DD/YYYY', time: '12:mm AM'
     2. DateTime Input has hour value of 12
-        - Expected = date: 'MM/DD/YYYY', time: '12:MM PM'
+        - Expected = date: 'MM/DD/YYYY', time: '12:mm PM'
     3. DateTime Input has hour value greater than 12
-        - Expected = date: 'MM/DD/YYYY', time: '0(HH - 12):MM PM'
+        - Expected = date: 'MM/DD/YYYY', time: '0(hh - 12):mm PM'
     4. DateTime Input has hour value less than 12
-        - Expected = date: 'MM/DD/YYYY', time: 'HH:MM AM'
+        - Expected = date: 'MM/DD/YYYY', time: 'hh:mm AM'
 */
 it('converts from datetime', () => {
     const edgeCase1 = '2022-06-22T00:56';
@@ -258,15 +258,15 @@ it('converts from datetime', () => {
 });
 
 /* Edge Cases For Converting to DateTime 
-    ****FORMAT FROM Database = Date: 'MM/DD/YYYY' Time: 'HH:MM (A|P)M'****
+    ****FORMAT FROM Database = Date: 'MM/DD/YYYY' Time: 'hh:mm (A|P)M'****
     1. Time input has hour value of 12 but is PM
-        - Expected = dateTime: 'YYYY-MM-DDT12:MM'
+        - Expected = dateTime: 'YYYY-MM-DDT12:mm'
     2. Time input has hour value of 12 but is AM
-        - Expected = dateTime: 'YYYY-MM-DDT00:MM'
+        - Expected = dateTime: 'YYYY-MM-DDT00:mm'
     3. Time input has hour value less than 12 but is PM
-        - Expected = dateTime: 'YYYY-MM-DDT(HH + 12):MM'
+        - Expected = dateTime: 'YYYY-MM-DDT(hh + 12):mm'
     4. Time input has hour value less than 12 but is AM
-        - Expected = dateTime: 'YYYY-MM-DDTHH:MM'
+        - Expected = dateTime: 'YYYY-MM-DDThh:mm'
 */
 it('converts to datetime', () => {
     const edgeCaseDate1 = '06/22/2022';
@@ -291,7 +291,7 @@ it('converts to datetime', () => {
 });
 
 /* Edge Cases For Calculating Total Travel Time 
-    ****FORMAT FROM Database = Date: 'MM/DD/YYYY' Time: 'HH:MM (A|P)M'****
+    ****FORMAT FROM Database = Date: 'MM/DD/YYYY' Time: 'hh:mm (A|P)M'****
     1. Arrival/Departure Time HH values are equal but one is AM and one is PM
         AND Arrival/Departure Date inputs are equal
         - Expected = totalTime: '12h (minute difference)m'
@@ -374,4 +374,111 @@ it('calculates hour difference', () => {
     const edgeCaseArrivalDate6 = '04/10/2026';
     const hourDiff6 = calcHourDiff(edgeCaseDepartureDate6, edgeCaseArrivalDate6);
     expect(hourDiff6).toEqual(33292);
+});
+
+/* Edge Cases For Comparing Dates (Date1 >= Date2)
+    ****FORMAT FROM Database = Date: 'MM/DD/YYYY'****
+    1. Date1 and Date2 are the same date
+        - Expected = true
+    2. Date1 and Date2 have the same MM and DD but Date1 has a larger YYYY
+        - Expected = true
+    3. Date1 and Date2 have the same DD and YYYY but Date1 has a larger MM
+        - Expected = true
+    4. Date1 and Date2 have the same MM and YYYY but Date1 has a larger DD
+        - Expected = true;
+    5. Date1 has lesser MM and DD but a larger YYYY
+        - Expected = true;
+*/
+it('compares dates', () => {
+    const edgeCase1Date1 = '06/22/2022';
+    const edgeCase1Date2 = '06/22/2022';
+    expect(compareDates(edgeCase1Date1, edgeCase1Date2)).toEqual(true);
+
+    const edgeCase2Date1 = '06/22/2025';
+    const edgeCase2Date2 = '06/22/2022';
+    expect(compareDates(edgeCase2Date1, edgeCase2Date2)).toEqual(true);
+
+    const edgeCase3Date1 = '07/22/2022';
+    const edgeCase3Date2 = '06/22/2022';
+    expect(compareDates(edgeCase3Date1, edgeCase3Date2)).toEqual(true);
+
+    const edgeCase4Date1 = '06/30/2022';
+    const edgeCase4Date2 = '06/22/2022';
+    expect(compareDates(edgeCase4Date1, edgeCase4Date2)).toEqual(true);
+
+    const edgeCase5Date1 = '06/22/2023';
+    const edgeCase5Date2 = '08/30/2022';
+    expect(compareDates(edgeCase5Date1, edgeCase5Date2)).toEqual(true);
+});
+
+/* Edge Cases For Comparing Times (Time1 >= Time2)
+    ****FORMAT FROM Database = Time: 'hh:mm (A|P)M'****
+    1. Time1 and Time2 are the same time
+        - Expected = true
+    2. Time1 and Time2 have the same HH but Time1 has a larger MM
+        - Expected = true
+    3. Time1 and Time2 have the same time but Time1 is PM
+        - Expected = true
+    4. Time1 and Time2 are both 12 but Time1 is PM
+        - Expected = true;
+    5. Time1 has lesser HH and MM but Time1 is PM
+        - Expected = true;
+*/
+it('compares times', () => {
+    const edgeCase1Time1 = '09:00 AM';
+    const edgeCase1Time2 = '09:00 AM';
+    expect(compareTimes(edgeCase1Time1, edgeCase1Time2)).toEqual(true);
+
+    const edgeCase2Time1 = '09:01 AM';
+    const edgeCase2Time2 = '09:00 AM';
+    expect(compareTimes(edgeCase2Time1, edgeCase2Time2)).toEqual(true);
+
+    const edgeCase3Time1 = '09:00 PM';
+    const edgeCase3Time2 = '09:00 AM';
+    expect(compareTimes(edgeCase3Time1, edgeCase3Time2)).toEqual(true);
+
+    const edgeCase4Time1 = '12:00 PM';
+    const edgeCase4Time2 = '12:00 AM';
+    expect(compareTimes(edgeCase4Time1, edgeCase4Time2)).toEqual(true);
+
+    const edgeCase5Time1 = '01:00 PM';
+    const edgeCase5Time2 = '10:15 AM';
+    expect(compareTimes(edgeCase5Time1, edgeCase5Time2)).toEqual(true);
+});
+
+/* Edge Cases For Converting Dates
+    ****FORMAT FROM JavaScript Input = Date: 'YYYY-MM-DD'****
+    ****FORMAT FROM Database = Date: 'MM/DD/YYYY'****
+    1. Input Date is '2025-06-15'
+        - Expected = Date: '06/15/2025'
+*/
+it('converts dates', () => {
+    const edgeCase1 = '2025-06-15';
+    expect(convertDate(edgeCase1)).toEqual('06/15/2025');
+});
+
+/* Edge Cases For Converting Times (Date1 >= Date2)
+    ****FORMAT FROM JavaScript Input = Time: 'HH:MM'****
+    ****FORMAT FROM Database = Time: 'hh:mm (A|P)M'****
+    1. Input Time is '00:mm'
+        - Expected = Time: '12:mm AM'
+    2. Input Time is '12:mm'
+        - Expected = Time: '12:mm PM'
+    3. Input Time is '15:mm'
+        - Expected = Time: '03:mm PM'
+    4. Input Time is '11:mm'
+        - Expected = Time: '11:mm AM'
+*/
+it('converts times', () => {
+    const edgeCase1 = '00:54';
+    expect(convertTime(edgeCase1)).toEqual('12:54 AM');
+
+    const edgeCase2 = '12:54';
+    expect(convertTime(edgeCase2)).toEqual('12:54 PM');
+
+    const edgeCase3 = '15:54';
+    expect(convertTime(edgeCase3)).toEqual('03:54 PM');
+
+    const edgeCase4 = '11:54';
+    expect(convertTime(edgeCase4)).toEqual('11:54 AM');
 });
