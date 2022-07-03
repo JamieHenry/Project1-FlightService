@@ -13,6 +13,7 @@ import styled from "styled-components";
     justify-content: center;
     font-size: 20px;
     font-weight: bold;
+    margin-top: 15px;
 `;
 
 export const FormError = ({ id, children }) => {
