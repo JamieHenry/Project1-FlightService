@@ -6,7 +6,7 @@ import styled from 'styled-components';
  */
 export const OuterContainer = styled.div`
     display: grid;
-    background-color: lightgray;
+    background-color: #E9E9E9;
     grid-template-columns: 75% 25%;
     gap: 10px;
     border: 1px solid black;

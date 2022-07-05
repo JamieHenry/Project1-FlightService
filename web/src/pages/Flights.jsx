@@ -145,14 +145,14 @@ export const Flights = () => {
 
     return (
         <>
-            <div style={{ borderBottom: '2px solid', backgroundColor: 'lightgray', padding: '1em 1.5em', textAlign: 'center' }}>
+            <div style={{ borderBottom: '2px solid', backgroundColor: '#E9E9E9', padding: '1em 1.5em', textAlign: 'center' }}>
                 <Center>
                     <h3>Create New Flight</h3>
                     <DropDownButton onClick={() => setShowForm(!showForm)} />
                 </Center>
                 {showForm && <AppNewFlightForm updateFlights={updateFlights} />}
             </div>
-            <div style={{ borderBottom: '2px solid', backgroundColor: 'lightgray', padding: '1em 1.5em', textAlign: 'center', marginBottom: '15px'}}>
+            <div style={{ borderBottom: '2px solid', backgroundColor: '#E9E9E9', padding: '1em 1.5em', textAlign: 'center', marginBottom: '15px'}}>
             <Center>
                     <h3>Filter Flights</h3>
                     <DropDownButton onClick={() => { updateFlights(); setShowFilters(!showFilters); }} />

@@ -15,18 +15,13 @@ export const EditModal = ({ updateFlights, showModal, hideModal, editModal, flig
     return (
         <Modal show={showModal} onHide={hideModal}>
             <Modal.Header closeButton>
-            <Modal.Title><div className='alert alert-success'>Editing Flight Number: {flight.flightNumber}</div></Modal.Title>
+            <Modal.Title><div className='alert alert-info'>Editing Flight Number: {flight.flightNumber}</div></Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
                     <AppUpdateFlightForm closeEditModal={editModal} editFlights={editFlights} flight={flight} updateFlights={updateFlights} />
                 </div>
             </Modal.Body>
-            <Modal.Footer>
-            <Button variant='outline-dark' onClick={hideModal}>
-                Cancel
-            </Button>
-            </Modal.Footer>
         </Modal>
     )
 }
