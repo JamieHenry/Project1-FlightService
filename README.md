@@ -1,4 +1,4 @@
-# Project1-FlightService - DUE 07/08
+# Project1-FlightService
 MERN stack project for an airline service
 
 ## Functional Requirements
