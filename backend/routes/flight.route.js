@@ -87,6 +87,8 @@ router.get('/', async (req, res) => {
  *          responses:
  *              200:
  *                  description: Success
+ *              201:
+ *                  description: Created
  *              400:
  *                  description: Bad request
  *              404:
@@ -118,6 +120,8 @@ router.post('/', async (req, res) => {
  *          responses:
  *              200:
  *                  description: Success
+ *              201:
+ *                  description: Created
  *              400:
  *                  description: Bad request
  *              404:
@@ -158,7 +162,7 @@ router.put('/', async (req, res) => {
 router.delete('/:flightNo', async (req, res) => {
     try {
         const deletedFlight = await deleteFlight(req.params.flightNo);
-        res.status(201).json({ deletedFlight });
+        res.status(200).json({ deletedFlight });
     } catch (err) {
         res.status(err?.status || 500).json(err);
     }

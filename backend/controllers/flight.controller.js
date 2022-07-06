@@ -57,6 +57,7 @@ const updateFlight = async ({ flightNumber, departureDate, arrivalDate, departur
         };
         // find the Flight based on unique Flight Number, pass updates, and return the new Flight object
         const updatedFlight = await Flight.findOneAndUpdate({ flightNumber } , updates, { new: true });
+        if (updatedFlight === null) throw ({message: 'Flight not found'});
         return updatedFlight;
     } catch (err) {
         throw { status: 400, message: err.message };
@@ -72,6 +73,7 @@ const updateFlight = async ({ flightNumber, departureDate, arrivalDate, departur
 const deleteFlight = async flightNumber => {
     try {
         const deletedFlight = await Flight.deleteOne({ flightNumber });
+        if (deletedFlight.deletedCount === 0) throw ({message: 'Flight not found'});
         return deletedFlight;
     } catch (err) {
         throw { status: 400, message: err.message };

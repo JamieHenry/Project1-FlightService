@@ -9,7 +9,7 @@ require('dotenv').config();
 // create app and set port w/ default 8080
 const app = express();
 const PORT = process.env.PORT || 8080;
-const MONGO_URI = process.env.DEVELOPMENT ? process.env.DEVELOPMENT_MONGO_URI : process.env.PRODUCTION_MONGO_URI;
+const MONGO_URI = process.env.MONGO_URI;
 
 // set up swagger docs
 const options = {
