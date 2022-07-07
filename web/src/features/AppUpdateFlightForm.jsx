@@ -88,7 +88,6 @@ export const AppUpdateFlightForm = ({ flight, updateFlights, closeEditModal }) =
                 closeEditModal();
             })
             .catch(err => {
-                console.log(err);
                 setError(err.response.data.message);
             });
     }

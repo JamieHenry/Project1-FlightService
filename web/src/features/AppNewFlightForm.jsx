@@ -61,7 +61,6 @@ export const validateInputs = inputs => {
  * @returns - both converted date (format: 'mm/dd/yyyy') and time (format: 'hh:mm (A|P)M')
  */
 export const convertFromDateTime = dateTime => {
-    console.log(dateTime);
     // split parameter into its corresponding year, month, day, time values
     let [date, time] = dateTime.split('T');
     let [year, month, day] = date.split('-');

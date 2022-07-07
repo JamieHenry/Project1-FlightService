@@ -61,7 +61,6 @@ export const AppFlightCard = ({ flight, margin, updateFlights }) => {
     const submitDelete = () => {
         axios.delete(`http://localhost:8080/flights/${flight.flightNumber}`)
             .then(res => {
-                console.log(res.data);
                 updateFlights();
             })
             .catch(err => console.log(err));
