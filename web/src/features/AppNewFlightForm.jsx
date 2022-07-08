@@ -29,7 +29,7 @@ export const validateInputs = inputs => {
     //      - current passenger count must be below or equal to passenger limit
     //      - arrival/departure airport must be not equal and be 3 letters in length
     if (departureDate !== arrivalDate && compareDates(departureDate, arrivalDate)) return { valid: false, msg: 'Invalid Date' };
-    if (compareTimes(departureTime, arrivalTime)) return { valid: false, msg: 'Invalid Time' };
+    if (compareTimes(departureTime, arrivalTime) && departureDate === arrivalDate) return { valid: false, msg: 'Invalid Time' };
     if (parseInt(inputs.currPassengers) > parseInt(inputs.passengerLimit)) return { valid: false, msg: 'Invalid Passenger Count' };
     if (inputs.departureAirport === inputs.arrivalAirport || inputs.departureAirport.length < 3 || inputs.arrivalAirport.length < 3) return { valid: false, msg: 'Invalid Airport' };
 
