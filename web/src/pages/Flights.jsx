@@ -6,6 +6,52 @@ import { AppFlightList, AppNewFlightForm, AppFlightFilter } from '../features';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 /**
+     * compares if first date value comes 
+     *      after second date value (greater than)
+     * 
+     * @param {String} date1 
+     * @param {String} date2 
+     * @returns - true if date1 >= date2, false otherwise
+     */
+export const compareDates = (date1, date2) => {
+    const [monthValue, dayValue, yearValue] = date1.split('/');
+    const [monthFilter, dayFilter, yearFilter] = date2.split('/');
+
+    if (yearValue > yearFilter) return true;
+    if (monthValue > monthFilter && yearValue === yearFilter) return true;
+    if (dayValue >= dayFilter && monthValue === monthFilter && yearValue === yearFilter) return true;
+
+    return false;
+}
+
+/**
+ * compares if first time value comes 
+ *      after or is equal to second time value (greater than)
+ * 
+ * @param {String} time1 - format: 'hh:mm (A|P)M'
+ * @param {String} time2 - format: 'hh:mm (A|P)M'
+ * @returns - true if time1 >= time2, false otherwise
+ */
+export const compareTimes = (time1, time2) => {
+    let [hourMinValue, amPmValue] = time1.split(' ');
+    let [filterHourMin, filterAmPm] = time2.split(' ');
+    let [hourValue, minValue] = hourMinValue.split(':');
+    let [filterHour, filterMin] = filterHourMin.split(':');
+
+    // correct PM times by adding 12 hours
+    // also catch 12 AM time by making it have a value of 0
+    if (amPmValue === 'PM') hourValue = parseInt(hourValue) + 12;
+    if (filterAmPm === 'PM') filterHour = parseInt(filterHour) + 12;
+    if (amPmValue === 'AM' && hourValue === '12') hourValue = 0;
+    if (filterAmPm === 'AM' && filterHour === '12') filterHour = 0;
+
+    if (hourValue > filterHour) return true;
+    if (minValue >= filterMin && hourValue === filterHour) return true;
+
+    return false;
+}
+
+/**
  * 
  * @returns - main component that holds flight list, new flight form, flight filter form
  */
@@ -81,52 +127,6 @@ export const Flights = () => {
         }
         // set filtered flights to be passed to components
         setFilteredFlights(currFilteredFlights);
-    }
-
-    /**
-     * compares if first date value comes 
-     *      after second date value (greater than)
-     * 
-     * @param {String} date1 
-     * @param {String} date2 
-     * @returns - true if date1 >= date2, false otherwise
-     */
-    const compareDates = (date1, date2) => {
-        const [monthValue, dayValue, yearValue] = date1.split('/');
-        const [monthFilter, dayFilter, yearFilter] = date2.split('/');
-
-        if (yearValue > yearFilter) return true;
-        if (monthValue > monthFilter && yearValue === yearFilter) return true;
-        if (dayValue >= dayFilter && monthValue === monthFilter && yearValue === yearFilter) return true;
-    
-        return false;
-    }
-
-    /**
-     * compares if first time value comes 
-     *      after or is equal to second time value (greater than)
-     * 
-     * @param {String} time1 - format: 'hh:mm (A|P)M'
-     * @param {String} time2 - format: 'hh:mm (A|P)M'
-     * @returns - true if time1 >= time2, false otherwise
-     */
-    const compareTimes = (time1, time2) => {
-        let [hourMinValue, amPmValue] = time1.split(' ');
-        let [filterHourMin, filterAmPm] = time2.split(' ');
-        let [hourValue, minValue] = hourMinValue.split(':');
-        let [filterHour, filterMin] = filterHourMin.split(':');
-
-        // correct PM times by adding 12 hours
-        // also catch 12 AM time by making it have a value of 0
-        if (amPmValue === 'PM') hourValue = parseInt(hourValue) + 12;
-        if (filterAmPm === 'PM') filterHour = parseInt(filterHour) + 12;
-        if (amPmValue === 'AM' && hourValue === '12') hourValue = 0;
-        if (filterAmPm === 'AM' && filterHour === '12') filterHour = 0;
-
-        if (hourValue > filterHour) return true;
-        if (minValue >= filterMin && hourValue === filterHour) return true;
-
-        return false;
     }
 
     // update current/filtered flights and set state

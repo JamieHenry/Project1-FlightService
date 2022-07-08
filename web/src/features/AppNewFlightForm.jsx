@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useRef, useState } from 'react';
 import { Form } from 'react-bootstrap';
+import { compareDates, compareTimes } from '../pages/Flights';
 import { DateTimeInput, NumberInput, StringInput, FormButton, FormError } from '../components/Form';
 
 /**
@@ -22,19 +23,13 @@ export const validateInputs = inputs => {
     const [departureDate, departureTime] = convertFromDateTime(inputs.departureDateTime);
     const [arrivalDate, arrivalTime] = convertFromDateTime(inputs.arrivalDateTime);
 
-    // split up arrival/departure date into corresponding month, day, year values
-    const [departureMonth, departureDay, departureYear] = departureDate.split('/');
-    const [arrivalMonth, arrivalDay, arrivalYear] = arrivalDate.split('/');
-
     // checking for valid dates, times, passengers, airports
     //      - arrival date must be after departure date
     //      - arrival time must be after departure time unless dates are different
     //      - current passenger count must be below or equal to passenger limit
     //      - arrival/departure airport must be not equal and be 3 letters in length
-    if (arrivalYear < departureYear) return { valid: false, msg: 'Invalid Date' };
-    if (arrivalMonth < departureMonth && arrivalYear === departureYear) return { valid: false, msg: 'Invalid Date' };
-    if (arrivalDay < departureDay && arrivalMonth === departureMonth && arrivalYear === departureYear) return { valid: false, msg: 'Invalid Date' };
-    if (arrivalTime <= departureTime && arrivalDate === departureDate) return { valid: false, msg: 'Invalid Time' };
+    if (departureDate !== arrivalDate && compareDates(departureDate, arrivalDate)) return { valid: false, msg: 'Invalid Date' };
+    if (compareTimes(departureTime, arrivalTime)) return { valid: false, msg: 'Invalid Time' };
     if (parseInt(inputs.currPassengers) > parseInt(inputs.passengerLimit)) return { valid: false, msg: 'Invalid Passenger Count' };
     if (inputs.departureAirport === inputs.arrivalAirport || inputs.departureAirport.length < 3 || inputs.arrivalAirport.length < 3) return { valid: false, msg: 'Invalid Airport' };
 
@@ -153,7 +148,6 @@ export const AppNewFlightForm = ({ updateFlights }) => {
                 passengerLimitInput.current.value = null;
             })
             .catch(err => {
-                console.log(err);
                 setError(err.response.data.message);
             });
     }

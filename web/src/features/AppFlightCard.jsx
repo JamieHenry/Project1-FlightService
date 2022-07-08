@@ -60,10 +60,9 @@ export const AppFlightCard = ({ flight, margin, updateFlights }) => {
     // confirmed delete sent to database, then close confirmation
     const submitDelete = () => {
         axios.delete(`http://localhost:8080/flights/${flight.flightNumber}`)
-            .then(res => {
+            .then(() => {
                 updateFlights();
-            })
-            .catch(err => console.log(err));
+            });
         setDisplayConfirmation(false);
     }
 
